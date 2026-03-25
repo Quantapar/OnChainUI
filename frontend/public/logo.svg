@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <!-- 3D isometric cube -->
+  <!-- Front face -->
+  <path d="M16 6 L6 12 L6 24 L16 30 L26 24 L26 12 Z" stroke="#18181B" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+  <!-- Inner edges -->
+  <line x1="16" y1="18" x2="6" y2="12" stroke="#18181B" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="16" y1="18" x2="26" y2="12" stroke="#18181B" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="16" y1="18" x2="16" y2="30" stroke="#18181B" stroke-width="1.8" stroke-linecap="round"/>
+</svg>
