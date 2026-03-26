@@ -50,6 +50,7 @@ function AnimatedNumber({
     </>
   );
 }
+
 const INSTALL_COMMAND = "npm install onchain-ui";
 
 export function Hero() {
@@ -57,9 +58,7 @@ export function Hero() {
   const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
-    if (!isCopied) {
-      return;
-    }
+    if (!isCopied) return;
 
     const timeoutId = window.setTimeout(() => {
       setIsCopied(false);
@@ -72,9 +71,9 @@ export function Hero() {
     shouldReduceMotion
       ? {}
       : {
-          initial: { opacity: 0, transform: "translateY(12px)" },
+          initial: { opacity: 0, transform: "translateY(20px)" },
           animate: { opacity: 1, transform: "translateY(0px)" },
-          transition: { duration: 0.5, delay, ease: EASE },
+          transition: { duration: 0.6, delay, ease: EASE },
         };
 
   const handleCopyInstallCommand = async () => {
@@ -88,15 +87,15 @@ export function Hero() {
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-24 text-center md:py-36">
-<motion.div {...fadeUp(0)}>
+      <motion.div {...fadeUp(0.05)}>
         <span className="inline-block rounded-full border border-zinc-200 bg-zinc-50 px-4 py-1.5 text-xs font-medium text-zinc-600">
           Web3 Component Library
         </span>
       </motion.div>
 
-<motion.h1
+      <motion.h1
         className="mx-auto mt-6 max-w-3xl font-display tracking-tight"
-        {...fadeUp(0.1)}
+        {...fadeUp(0.15)}
       >
         <span className="block text-5xl font-medium text-zinc-900 md:text-7xl">
           Beautiful components
@@ -106,17 +105,17 @@ export function Hero() {
         </span>
       </motion.h1>
 
-<motion.p
+      <motion.p
         className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-500 md:text-lg"
-        {...fadeUp(0.2)}
+        {...fadeUp(0.3)}
       >
         Production-ready React components for wallets, tokens, chains, and
         transactions. Copy, paste, and ship.
       </motion.p>
 
-<motion.div
+      <motion.div
         className="mt-10 flex items-center justify-center gap-4"
-        {...fadeUp(0.3)}
+        {...fadeUp(0.4)}
       >
         <a
           href="#get-started"
@@ -133,51 +132,51 @@ export function Hero() {
         </a>
       </motion.div>
 
-<motion.div className="mx-auto mt-12 max-w-md" {...fadeUp(0.4)}>
-        <div className="relative flex items-center justify-center rounded-full border border-zinc-200 bg-zinc-50 px-4 py-2.5">
-          <code className="text-center text-sm text-zinc-600">
+      <motion.div className="mx-auto mt-12 inline-flex" {...fadeUp(0.5)}>
+        <button
+          type="button"
+          onClick={handleCopyInstallCommand}
+          className="group inline-flex cursor-pointer items-center gap-3 rounded-full border border-zinc-200 bg-zinc-50 py-2 pl-5 pr-2 transition-[background-color,border-color] duration-150 ease-out hover:border-zinc-300 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+          aria-label={
+            isCopied ? "Install command copied" : "Copy install command"
+          }
+        >
+          <code className="text-sm text-zinc-600">
             npm install <span className="text-zinc-900">onchain-ui</span>
           </code>
-          <button
-            type="button"
-            onClick={handleCopyInstallCommand}
-            className="absolute right-2 inline-flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-700 transition-[color,background-color,border-color,transform] duration-150 ease-out hover:border-zinc-300 hover:bg-zinc-100 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-            aria-label={
-              isCopied ? "Install command copied" : "Copy install command"
-            }
-          >
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-500 transition-[border-color,color] duration-150 ease-out group-hover:border-zinc-300 group-hover:text-zinc-700">
             {isCopied ? (
               <Check className="h-3.5 w-3.5" />
             ) : (
               <Copy className="h-3.5 w-3.5" />
             )}
-          </button>
-        </div>
+          </span>
+        </button>
       </motion.div>
 
-<motion.div
-        className="mx-auto mt-16 flex max-w-lg items-center justify-center gap-12"
-        {...fadeUp(0.5)}
+      <motion.div
+        className="mx-auto mt-16 flex max-w-lg items-center justify-center gap-6"
+        {...fadeUp(0.6)}
       >
-        <div>
+        <div className="w-28 text-center">
           <p className="tabular-nums text-3xl font-bold text-zinc-900">
-            <AnimatedNumber value={30} suffix="+" delay={500} />
+            <AnimatedNumber value={30} suffix="+" delay={700} />
           </p>
           <p className="mt-1 text-sm text-zinc-500">Components</p>
         </div>
         <div className="h-10 w-px bg-zinc-200" />
-        <div>
+        <div className="w-28 text-center">
           <p className="tabular-nums text-3xl font-bold text-zinc-900">
-            <AnimatedNumber value={8} suffix="+" delay={650} />
+            <AnimatedNumber value={8} suffix="+" delay={850} />
           </p>
           <p className="mt-1 text-sm text-zinc-500">Categories</p>
         </div>
         <div className="h-10 w-px bg-zinc-200" />
-        <div>
+        <div className="w-28 text-center">
           <p className="tabular-nums text-3xl font-bold text-zinc-900">
-            &lt;<AnimatedNumber value={5} suffix="kb" delay={800} />
+            <AnimatedNumber value={100} suffix="%" delay={1000} />
           </p>
-          <p className="mt-1 text-sm text-zinc-500">Avg Bundle Size</p>
+          <p className="mt-1 text-sm text-zinc-500">TypeScript</p>
         </div>
       </motion.div>
     </section>

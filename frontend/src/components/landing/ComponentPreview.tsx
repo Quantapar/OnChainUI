@@ -65,7 +65,12 @@ export function ComponentPreview() {
 
 <div className="mt-16 grid gap-6 sm:grid-cols-2">
           {COMPONENTS.map((component, i) => (
-            <ScrollReveal key={component.name} delay={i * 0.08}>
+            <ScrollReveal
+              key={component.name}
+              delay={i * 0.12}
+              direction={i % 2 === 0 ? "left" : "right"}
+              distance={30}
+            >
               <div className="rounded-xl border border-zinc-200 bg-white transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:shadow-md">
 <div className="flex min-h-35 items-center justify-center border-b border-zinc-100 bg-zinc-50/50 p-8">
                   {component.preview}

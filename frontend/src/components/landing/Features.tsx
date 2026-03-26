@@ -43,7 +43,7 @@ export function Features() {
 
 <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature, i) => (
-            <ScrollReveal key={feature.title} delay={i * 0.08}>
+            <ScrollReveal key={feature.title} delay={i * 0.1} distance={30}>
               <div className="rounded-xl border border-zinc-200 bg-white p-6 transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:shadow-md">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-100">
                   <feature.icon className="h-5 w-5 text-zinc-700" aria-hidden="true" />
