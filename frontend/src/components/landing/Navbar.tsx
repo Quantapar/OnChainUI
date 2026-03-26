@@ -1,5 +1,5 @@
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -20,11 +20,11 @@ const NAV_LINKS = [
   { label: "Templates", href: "#templates" },
 ];
 
-export function Navbar() {
+export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md">
+    <nav ref={ref}>
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
 <a href="/" className="flex items-center gap-1.5">
           <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7" />
@@ -50,7 +50,7 @@ export function Navbar() {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex cursor-pointer items-center gap-2 rounded-full border border-zinc-200 px-4 py-2 text-[14px] text-zinc-700 transition-[color,background-color,border-color] duration-150 ease-out hover:bg-zinc-50 hover:border-zinc-300 hover:text-zinc-900 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+            className="flex cursor-pointer items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-[14px] text-zinc-700 transition-[color,background-color,border-color] duration-150 ease-out hover:bg-zinc-50 hover:border-zinc-300 hover:text-zinc-900 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
           >
             <GitHubIcon className="h-4 w-4" />
             GitHub
@@ -77,7 +77,7 @@ export function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="bg-white px-8 pb-6 md:hidden">
+        <div className="px-8 pb-6 md:hidden">
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a
@@ -111,4 +111,4 @@ export function Navbar() {
       )}
     </nav>
   );
-}
+});

@@ -26,6 +26,13 @@
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+  background-color: white;
+  background-image:
+    repeating-linear-gradient(22.5deg, transparent, transparent 2px, rgba(75, 85, 99, 0.06) 2px, rgba(75, 85, 99, 0.06) 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(67.5deg, transparent, transparent 2px, rgba(107, 114, 128, 0.05) 2px, rgba(107, 114, 128, 0.05) 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(112.5deg, transparent, transparent 2px, rgba(55, 65, 81, 0.04) 2px, rgba(55, 65, 81, 0.04) 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(157.5deg, transparent, transparent 2px, rgba(31, 41, 55, 0.03) 2px, rgba(31, 41, 55, 0.03) 3px, transparent 3px, transparent 8px);
 }
 
 body {
@@ -36,26 +43,42 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Tabular nums for stats/numbers */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* All headings use Georgia display font, weight 400 */
 h1, h2, h3 {
   font-family: Georgia, serif;
   font-weight: 400;
   text-wrap: balance;
 }
 
-/* Gate hover effects behind pointer device — prevents false hover on touch */
 @media (hover: hover) and (pointer: fine) {
   .hover-lift:hover {
     transform: translateY(-2px);
   }
 }
 
-/* Respect reduced motion — keep opacity, remove movement */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -183,7 +206,8 @@ h1, h2, h3 {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: transparent;
   }
   html {
     @apply font-sans;

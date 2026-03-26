@@ -126,7 +126,7 @@ export function Hero() {
         </a>
         <a
           href="#components"
-          className="cursor-pointer rounded-full border border-zinc-200 px-5 py-2.5 text-sm font-medium text-zinc-700 transition-[color,background-color] duration-150 ease-out hover:bg-zinc-50 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+          className="cursor-pointer rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-sm font-medium text-zinc-700 transition-[color,background-color] duration-150 ease-out hover:bg-zinc-50 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
         >
           Browse Components
         </a>
@@ -136,7 +136,7 @@ export function Hero() {
         <button
           type="button"
           onClick={handleCopyInstallCommand}
-          className="group inline-flex cursor-pointer items-center gap-3 rounded-full border border-zinc-200 bg-zinc-50 py-2 pl-5 pr-2 transition-[background-color,border-color] duration-150 ease-out hover:border-zinc-300 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+          className="group inline-flex cursor-pointer items-center gap-3 rounded-full border border-zinc-200 bg-white py-2 pl-5 pr-2 transition-[background-color,border-color] duration-150 ease-out hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
           aria-label={
             isCopied ? "Install command copied" : "Copy install command"
           }

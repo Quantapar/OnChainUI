@@ -30,7 +30,7 @@ const FEATURES = [
 
 export function Features() {
   return (
-    <section id="features" className="border-t border-zinc-100 bg-zinc-50/50">
+    <section id="features" className="relative border-t border-zinc-100">
       <div className="mx-auto max-w-6xl px-6 py-24">
 <ScrollReveal className="mx-auto w-full text-center">
           <h2 className="mx-auto text-2xl font-normal tracking-tight text-zinc-900 md:text-3xl">
