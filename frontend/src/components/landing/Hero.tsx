@@ -1,55 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Check, Copy } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  NetworkEthereum,
+  NetworkArbitrumOne,
+  TokenBTC,
+  NetworkPolygon,
+  NetworkBase,
+  NetworkSolana,
+} from "@web3icons/react";
+
+const CHAINS = [
+  { name: "Bitcoin", icon: TokenBTC },
+  { name: "Solana", icon: NetworkSolana },
+  { name: "Ethereum", icon: NetworkEthereum },
+  { name: "Base", icon: NetworkBase },
+  { name: "Polygon", icon: NetworkPolygon },
+  { name: "Arbitrum", icon: NetworkArbitrumOne },
+];
 
 const EASE = [0.23, 1, 0.32, 1] as const;
-
-function AnimatedNumber({
-  value,
-  prefix = "",
-  suffix = "",
-  delay = 0,
-  duration = 1200,
-}: {
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  delay?: number;
-  duration?: number;
-}) {
-  const [display, setDisplay] = useState(0);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      started.current = true;
-      const start = performance.now();
-
-      function tick(now: number) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        setDisplay(Math.round(eased * value));
-
-        if (progress < 1) {
-          requestAnimationFrame(tick);
-        }
-      }
-
-      requestAnimationFrame(tick);
-    }, delay);
-
-    return () => window.clearTimeout(timeout);
-  }, [value, delay, duration]);
-
-  return (
-    <>
-      {prefix}
-      {display}
-      {suffix}
-    </>
-  );
-}
 
 const INSTALL_COMMAND = "npm install onchain-ui";
 
@@ -155,28 +125,22 @@ export function Hero() {
       </motion.div>
 
       <motion.div
-        className="mx-auto mt-16 flex max-w-lg items-center justify-center gap-6"
+        className="relative mx-auto mt-16 max-w-6xl overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
+        }}
         {...fadeUp(0.6)}
       >
-        <div className="w-28 text-center">
-          <p className="tabular-nums text-3xl font-bold text-zinc-900">
-            <AnimatedNumber value={30} suffix="+" delay={700} />
-          </p>
-          <p className="mt-1 text-sm text-zinc-500">Components</p>
-        </div>
-        <div className="h-10 w-px bg-zinc-200" />
-        <div className="w-28 text-center">
-          <p className="tabular-nums text-3xl font-bold text-zinc-900">
-            <AnimatedNumber value={8} suffix="+" delay={850} />
-          </p>
-          <p className="mt-1 text-sm text-zinc-500">Categories</p>
-        </div>
-        <div className="h-10 w-px bg-zinc-200" />
-        <div className="w-28 text-center">
-          <p className="tabular-nums text-3xl font-bold text-zinc-900">
-            <AnimatedNumber value={100} suffix="%" delay={1000} />
-          </p>
-          <p className="mt-1 text-sm text-zinc-500">TypeScript</p>
+        <div className="marquee-track flex w-max">
+          {[...Array(4)].map((_, setIndex) =>
+            CHAINS.map((chain) => (
+              <div key={`${setIndex}-${chain.name}`} className="flex shrink-0 items-center gap-3 px-6">
+                <chain.icon variant="branded" size={48} />
+                <span className="text-xl font-medium text-zinc-400">{chain.name}</span>
+              </div>
+            ))
+          )}
         </div>
       </motion.div>
     </section>

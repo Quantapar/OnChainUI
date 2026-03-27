@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { Navbar } from "./components/landing/Navbar";
 import { Hero } from "./components/landing/Hero";
-import { ChainStrip } from "./components/landing/ChainStrip";
 import { ComponentPreview } from "./components/landing/ComponentPreview";
 import { HowItWorks } from "./components/landing/HowItWorks";
 import { Features } from "./components/landing/Features";
@@ -32,10 +31,6 @@ function App() {
             `,
           }}
         />
-        <div className="absolute inset-0 mx-auto hidden max-w-[1200px] justify-between px-2 lg:flex">
-          <div className="h-full w-px bg-zinc-200/60" />
-          <div className="h-full w-px bg-zinc-200/60" />
-        </div>
       </div>
 
       <FloatingNav navbarRef={navbarRef} />
@@ -43,7 +38,6 @@ function App() {
       <div className="relative z-10">
         <Navbar ref={navbarRef} />
         <Hero />
-        <ChainStrip />
         <ComponentPreview />
         <HowItWorks />
         <Features />
