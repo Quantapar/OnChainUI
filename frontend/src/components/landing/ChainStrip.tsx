@@ -17,7 +17,13 @@ const CHAINS = [
   { name: "Arbitrum", icon: NetworkArbitrumOne },
 ];
 
-function ChainItem({ name, icon: Icon }: { name: string; icon: typeof TokenBTC }) {
+function ChainItem({
+  name,
+  icon: Icon,
+}: {
+  name: string;
+  icon: typeof TokenBTC;
+}) {
   return (
     <div className="flex shrink-0 items-center gap-3 px-6">
       <Icon variant="branded" size={48} />
@@ -40,8 +46,10 @@ export function ChainStrip() {
           <div
             className="relative mx-auto mt-8 max-w-6xl overflow-hidden"
             style={{
-              maskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
-              WebkitMaskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
+              maskImage:
+                "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
             }}
           >
             <div className="marquee-track flex w-max">
@@ -52,7 +60,7 @@ export function ChainStrip() {
                     name={chain.name}
                     icon={chain.icon}
                   />
-                ))
+                )),
               )}
             </div>
           </div>

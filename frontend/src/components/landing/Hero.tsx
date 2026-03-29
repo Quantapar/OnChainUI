@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Copy } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -26,6 +26,8 @@ const INSTALL_COMMAND = "npm install onchain-ui";
 export function Hero() {
   const shouldReduceMotion = useReducedMotion();
   const [isCopied, setIsCopied] = useState(false);
+  const [marqueePaused, setMarqueePaused] = useState(false);
+  const marqueeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isCopied) return;
@@ -70,7 +72,7 @@ export function Hero() {
         <span className="block text-5xl font-medium text-zinc-900 md:text-7xl">
           Beautiful components
         </span>
-        <span className="mt-1 block text-3xl font-normal text-zinc-400 md:mt-2 md:text-6xl">
+        <span className="mt-1 block text-3xl font-normal text-zinc-500 md:mt-2 md:text-6xl">
           <span className="text-zinc-900">for</span> onchain apps
         </span>
       </motion.h1>
@@ -125,19 +127,26 @@ export function Hero() {
       </motion.div>
 
       <motion.div
-        className="relative mx-auto mt-16 max-w-6xl overflow-hidden"
+        className="relative mx-auto mt-24 max-w-6xl overflow-hidden"
         style={{
           maskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
           WebkitMaskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
         }}
+        role="marquee"
+        aria-label="Supported blockchain networks"
+        onClick={() => setMarqueePaused((p) => !p)}
         {...fadeUp(0.6)}
       >
-        <div className="marquee-track flex w-max">
+        <div
+          ref={marqueeRef}
+          className="marquee-track flex w-max"
+          style={marqueePaused ? { animationPlayState: "paused" } : undefined}
+        >
           {[...Array(4)].map((_, setIndex) =>
             CHAINS.map((chain) => (
-              <div key={`${setIndex}-${chain.name}`} className="flex shrink-0 items-center gap-3 px-6">
-                <chain.icon variant="branded" size={48} />
-                <span className="text-xl font-medium text-zinc-400">{chain.name}</span>
+              <div key={`${setIndex}-${chain.name}`} className="flex shrink-0 items-center gap-4 px-8">
+                <chain.icon variant="branded" size={56} />
+                <span className="text-2xl font-medium text-zinc-500">{chain.name}</span>
               </div>
             ))
           )}

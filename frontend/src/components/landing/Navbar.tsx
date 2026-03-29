@@ -1,4 +1,4 @@
-import { Menu, X } from "lucide-react";
+import { ExternalLink, Menu, X } from "lucide-react";
 import { forwardRef, useState } from "react";
 
 function GitHubIcon({ className }: { className?: string }) {
@@ -26,14 +26,14 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
   return (
     <nav ref={ref}>
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-<a href="/" className="flex items-center gap-1.5">
+        <a href="/" className="flex items-center gap-1.5">
           <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7" />
           <span className="text-[15px] font-semibold text-zinc-900">
             OnChainUI
           </span>
         </a>
 
-<div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
+        <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.label}
@@ -45,7 +45,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
           ))}
         </div>
 
-<div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
           <a
             href="https://github.com"
             target="_blank"
@@ -54,6 +54,8 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
           >
             <GitHubIcon className="h-4 w-4" />
             GitHub
+            <ExternalLink className="h-3 w-3 text-zinc-400" aria-hidden="true" />
+            <span className="sr-only">(opens in new tab)</span>
           </a>
           <a
             href="#get-started"
@@ -63,10 +65,11 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
           </a>
         </div>
 
-<button
+        <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="cursor-pointer text-zinc-600 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm"
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? (
             <X className="h-5 w-5" />
@@ -77,7 +80,11 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
       </div>
 
       {mobileOpen && (
-        <div className="px-8 pb-6 md:hidden">
+        <div
+          className="px-8 pb-6 md:hidden"
+          role="dialog"
+          aria-label="Mobile navigation"
+        >
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <a
@@ -98,6 +105,8 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
               >
                 <GitHubIcon className="h-4 w-4" />
                 GitHub
+                <ExternalLink className="h-3 w-3 text-zinc-400" aria-hidden="true" />
+                <span className="sr-only">(opens in new tab)</span>
               </a>
               <a
                 href="#get-started"

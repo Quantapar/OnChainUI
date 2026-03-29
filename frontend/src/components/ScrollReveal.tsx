@@ -36,7 +36,7 @@ export function ScrollReveal({
         opacity: 1,
         transform: `translate${axis}(0px)`,
       }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-40px" }}
       transition={{
         type: "spring",
         duration: 0.8,

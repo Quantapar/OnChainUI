@@ -23,7 +23,7 @@ export function HowItWorks() {
     <section className="border-t border-zinc-100">
       <div className="mx-auto max-w-6xl px-6 py-24">
         <ScrollReveal className="text-center">
-          <h2 className="text-2xl font-normal tracking-tight text-zinc-900 md:text-3xl">
+          <h2 className="text-3xl font-normal tracking-tight text-zinc-900 md:text-4xl">
             Three lines to production
           </h2>
           <p className="mx-auto mt-3 text-zinc-500">
@@ -35,7 +35,7 @@ export function HowItWorks() {
           {STEPS.map((item, i) => (
             <ScrollReveal key={item.step} delay={i * 0.15} distance={30}>
               <div className="group relative rounded-xl border border-zinc-200 bg-white p-6 transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:shadow-md">
-                <span className="text-xs font-bold tracking-widest text-zinc-300">
+                <span className="text-xs font-bold tracking-widest text-zinc-400">
                   {item.step}
                 </span>
                 <h3 className="mt-2 text-lg font-semibold text-zinc-900">
