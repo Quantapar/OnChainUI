@@ -129,8 +129,10 @@ export function Hero() {
       <motion.div
         className="relative mx-auto mt-24 max-w-6xl overflow-hidden"
         style={{
-          maskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
-          WebkitMaskImage: "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
+          maskImage:
+            "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",
         }}
         role="marquee"
         aria-label="Supported blockchain networks"
@@ -144,11 +146,16 @@ export function Hero() {
         >
           {[...Array(4)].map((_, setIndex) =>
             CHAINS.map((chain) => (
-              <div key={`${setIndex}-${chain.name}`} className="flex shrink-0 items-center gap-4 px-8">
+              <div
+                key={`${setIndex}-${chain.name}`}
+                className="flex shrink-0 items-center gap-4 px-8"
+              >
                 <chain.icon variant="branded" size={56} />
-                <span className="text-2xl font-medium text-zinc-500">{chain.name}</span>
+                <span className="text-2xl font-medium text-zinc-500">
+                  {chain.name}
+                </span>
               </div>
-            ))
+            )),
           )}
         </div>
       </motion.div>
