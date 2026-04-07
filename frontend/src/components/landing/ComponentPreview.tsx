@@ -24,7 +24,7 @@ const BENTO_LAYOUT = [
   { slug: "token-balance", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "chain-selector", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "address-display", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
-  { slug: "transaction-feed", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-2" },
+  { slug: "transaction-feed", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "network-status", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
 ];
 
@@ -189,7 +189,6 @@ function TransactionFeedPreview() {
   const transactions = [
     { type: "sent", label: "Sent ETH", to: "0x8f3a…c2d1", amount: "-0.5 ETH", color: "text-zinc-900" },
     { type: "received", label: "Received USDC", to: "0x4b7e…a9f3", amount: "+250 USDC", color: "text-green-600" },
-    { type: "sent", label: "Swap", to: "Uniswap V3", amount: "-100 USDC", color: "text-zinc-900" },
   ];
 
   return (
@@ -259,29 +258,24 @@ export function ComponentPreview() {
           </p>
         </ScrollReveal>
 
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[180px]">
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[200px]">
           {BENTO_LAYOUT.map((item, i) => {
             const component = COMPONENTS.find((c) => c.slug === item.slug);
             if (!component) return null;
 
             return (
-              <ScrollReveal key={item.slug} delay={i * 0.08} distance={24}>
+              <ScrollReveal key={item.slug} delay={i * 0.08} distance={24} className={`h-full ${item.colSpan} ${item.rowSpan}`}>
                 <Link
                   to={`/components/${item.slug}`}
-                  className={`group flex h-full flex-col rounded-xl border border-zinc-200 bg-white transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:shadow-md hover:border-zinc-300 ${item.colSpan} ${item.rowSpan}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:shadow-md hover:border-zinc-300"
                 >
-                  <div className="flex flex-1 items-center justify-center rounded-t-xl bg-zinc-50/50 p-6">
+                  <div className="flex min-h-0 flex-1 items-center justify-center rounded-t-xl bg-zinc-50/50 p-6">
                     {PREVIEW_MAP[item.slug]}
                   </div>
-                  <div className="border-t border-zinc-100 px-4 py-3">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-mono text-sm font-semibold text-zinc-900">
-                        {"<"}{component.name}{" />"}
-                      </h3>
-                      <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-[11px] font-medium text-zinc-500">
-                        {component.category}
-                      </span>
-                    </div>
+                  <div className="shrink-0 border-t border-zinc-100 px-4 py-3">
+                    <h3 className="font-mono text-sm font-semibold text-zinc-900">
+                      {component.name}
+                    </h3>
                     <p className="mt-1 text-sm text-zinc-500 line-clamp-1">
                       {component.description}
                     </p>
