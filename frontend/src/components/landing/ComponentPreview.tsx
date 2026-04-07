@@ -248,7 +248,7 @@ const PREVIEW_MAP: Record<string, React.ReactNode> = {
 export function ComponentPreview() {
   return (
     <section id="components" className="border-t border-zinc-100">
-      <div className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-6xl px-6 py-12">
         <ScrollReveal className="mx-auto w-full text-center">
           <h2 className="mx-auto text-3xl font-normal tracking-tight text-zinc-900 md:text-4xl">
             Component Preview
@@ -258,7 +258,7 @@ export function ComponentPreview() {
           </p>
         </ScrollReveal>
 
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[200px]">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[200px]">
           {BENTO_LAYOUT.map((item, i) => {
             const component = COMPONENTS.find((c) => c.slug === item.slug);
             if (!component) return null;
@@ -267,7 +267,7 @@ export function ComponentPreview() {
               <ScrollReveal key={item.slug} delay={i * 0.08} distance={24} className={`h-full ${item.colSpan} ${item.rowSpan}`}>
                 <Link
                   to={`/components/${item.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition-[transform,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:shadow-md hover:border-zinc-300"
+                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lg hover:border-zinc-300"
                 >
                   <div className="flex min-h-0 flex-1 items-center justify-center rounded-t-xl bg-zinc-50/50 p-6">
                     {PREVIEW_MAP[item.slug]}
