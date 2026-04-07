@@ -110,7 +110,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
               </a>
               <a
                 href="#get-started"
-                className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2.5 text-center text-[14px] font-medium text-white"
+                className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2.5 text-center text-[14px] font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97]"
               >
                 Get Started
               </a>

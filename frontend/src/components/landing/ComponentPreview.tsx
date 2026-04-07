@@ -290,7 +290,7 @@ export function ComponentPreview() {
           <div className="mt-8 text-center">
             <Link
               to="/components"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-sm font-medium text-zinc-700 transition-[color,background-color,border-color] duration-150 ease-out hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-150 ease-out hover:bg-zinc-800 active:scale-[0.97]"
             >
               View all components
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
