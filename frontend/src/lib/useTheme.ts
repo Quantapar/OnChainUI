@@ -28,25 +28,42 @@ function playClickSound(toDark: boolean) {
     if (audioCtx.state === "suspended") audioCtx.resume();
 
     const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
+    const duration = 0.026;
+
+    const buffer = audioCtx.createBuffer(
+      1,
+      Math.floor(audioCtx.sampleRate * duration),
+      audioCtx.sampleRate,
+    );
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      const decay = 1 - i / data.length;
+      data[i] = (Math.random() * 2 - 1) * decay * decay;
+    }
+
+    const source = audioCtx.createBufferSource();
+    source.buffer = buffer;
+
+    const highpass = audioCtx.createBiquadFilter();
+    highpass.type = "highpass";
+    highpass.frequency.value = toDark ? 1500 : 2300;
+    highpass.Q.value = 1;
+
+    const peak = audioCtx.createBiquadFilter();
+    peak.type = "peaking";
+    peak.frequency.value = toDark ? 3000 : 4000;
+    peak.Q.value = 1.6;
+    peak.gain.value = 12;
+
     const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.75, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
-    const startFreq = toDark ? 900 : 600;
-    const endFreq = toDark ? 380 : 1100;
-
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(startFreq, now);
-    osc.frequency.exponentialRampToValueAtTime(endFreq, now + 0.06);
-
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.18, now + 0.004);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
-
-    osc.connect(gain);
+    source.connect(highpass);
+    highpass.connect(peak);
+    peak.connect(gain);
     gain.connect(audioCtx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.1);
+    source.start(now);
   } catch {
     // audio is non-essential, fail silently
   }
