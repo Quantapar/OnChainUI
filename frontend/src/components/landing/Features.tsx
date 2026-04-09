@@ -4,27 +4,27 @@ import { ScrollReveal } from "../ScrollReveal";
 const FEATURES = [
   {
     icon: Wallet,
-    title: "Wallet-Ready",
+    title: "Plays nice with wallets",
     description:
-      "Connect buttons, address displays, and balance cards that work with any wallet provider.",
+      "Drop-in pieces for connecting, showing addresses, and reading balances. No wrestling with wallet SDKs.",
   },
   {
     icon: Blocks,
-    title: "Chain Agnostic",
+    title: "Any chain you ship on",
     description:
-      "Components that work across Ethereum, Solana, Base, and any EVM-compatible chain.",
+      "Works the same on Ethereum, Base, Solana, or whatever EVM chain you ended up choosing.",
   },
   {
     icon: Paintbrush,
-    title: "Fully Customizable",
+    title: "Yours to restyle",
     description:
-      "Built with Tailwind CSS. Override styles, extend themes, or use as-is with great defaults.",
+      "Just Tailwind under the hood. Tweak a class, swap a color, or leave it alone. It already looks good.",
   },
   {
     icon: Zap,
-    title: "Lightweight",
+    title: "Barely there",
     description:
-      "No heavy dependencies. Tree-shakeable exports so you only ship what you use.",
+      "Zero bloated dependencies. Import only the components you use and ship a smaller bundle.",
   },
 ];
 
@@ -41,10 +41,10 @@ export function Features() {
           </p>
         </ScrollReveal>
 
-<div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+<div className="mt-16 grid items-stretch gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature, i) => (
-            <ScrollReveal key={feature.title} delay={i * 0.1} distance={30}>
-              <div className="rounded-xl border border-zinc-200 bg-white p-6 transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:shadow-md">
+            <ScrollReveal key={feature.title} delay={i * 0.1} distance={30} className="h-full">
+              <div className="flex h-full flex-col rounded-2xl border border-zinc-200/80 bg-white p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-lg">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-100">
                   <feature.icon className="h-5 w-5 text-zinc-700" aria-hidden="true" />
                 </div>

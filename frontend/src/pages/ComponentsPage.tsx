@@ -126,7 +126,7 @@ function ComponentDetail({ component }: { component: ComponentMeta }) {
   return (
     <div className="max-w-3xl">
       <div className="flex items-center gap-2 text-[13px] text-zinc-400">
-        <Link to="/components" className="transition-colors hover:text-zinc-600">Components</Link>
+        <Link to="/components" className="cursor-pointer transition-colors hover:text-zinc-600">Components</Link>
         <ChevronRight className="h-3 w-3" />
         <span className="text-zinc-600">{component.category}</span>
         <ChevronRight className="h-3 w-3" />
@@ -272,19 +272,19 @@ export function ComponentsPage() {
       <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
           <div className="flex items-center gap-6">
-            <Link to="/" className="flex items-center gap-2">
+            <Link to="/" className="flex cursor-pointer items-center gap-2">
               <img src="/logo.svg" alt="OnChainUI" width={24} height={24} className="h-6 w-6" />
               <span className="text-[15px] font-semibold text-zinc-900">OnChainUI</span>
             </Link>
             <span className="hidden h-5 w-px bg-zinc-200 md:block" />
             <div className="hidden items-center gap-5 md:flex">
-              <Link to="/components" className="text-[13px] font-medium text-zinc-900">
+              <Link to="/components" className="cursor-pointer text-[13px] font-medium text-zinc-900">
                 Components
               </Link>
-              <a href="#" className="text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900">
+              <a href="#" className="cursor-pointer text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900">
                 Docs
               </a>
-              <a href="#" className="text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900">
+              <a href="#" className="cursor-pointer text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900">
                 Templates
               </a>
             </div>

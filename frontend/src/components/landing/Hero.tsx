@@ -127,7 +127,7 @@ export function Hero() {
       </motion.div>
 
       <motion.div
-        className="relative mx-auto mt-24 max-w-6xl overflow-hidden"
+        className="relative mx-auto mt-24 max-w-6xl cursor-pointer overflow-hidden"
         style={{
           maskImage:
             "linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent)",

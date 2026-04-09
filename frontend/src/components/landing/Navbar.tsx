@@ -26,7 +26,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
   return (
     <nav ref={ref}>
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <a href="/" className="flex items-center gap-1.5">
+        <a href="/" className="flex cursor-pointer items-center gap-1.5">
           <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7" />
           <span className="text-[15px] font-semibold text-zinc-900">
             OnChainUI
@@ -38,7 +38,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
             <a
               key={link.label}
               href={link.href}
-              className="text-[13px] font-medium uppercase tracking-wide text-zinc-500 transition-[color] duration-150 ease-out hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm"
+              className="cursor-pointer text-[13px] font-medium uppercase tracking-wide text-zinc-500 transition-[color] duration-150 ease-out hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm"
             >
               {link.label}
             </a>
@@ -91,7 +91,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-[15px] text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
+                className="cursor-pointer rounded-lg px-3 py-2.5 text-[15px] text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
               >
                 {link.label}
               </a>

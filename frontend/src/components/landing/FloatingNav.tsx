@@ -35,7 +35,7 @@ export function FloatingNav({ navbarRef }: { navbarRef: React.RefObject<HTMLElem
         transition: "opacity 200ms cubic-bezier(0.23, 1, 0.32, 1), transform 200ms cubic-bezier(0.23, 1, 0.32, 1)",
       }}
     >
-      <a href="/" className="mb-8 block">
+      <a href="/" className="mb-8 block cursor-pointer">
         <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7" />
       </a>
       <div className="flex flex-col gap-1">
