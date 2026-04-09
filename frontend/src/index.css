@@ -38,25 +38,6 @@ html.dark {
   color-scheme: dark;
 }
 
-::selection {
-  background-color: #ffe7df;
-  color: #ff5c29;
-}
-
-::-moz-selection {
-  background-color: #ffe7df;
-  color: #ff5c29;
-}
-
-html.dark ::selection {
-  background-color: rgba(255, 92, 41, 0.18);
-  color: #ff8a63;
-}
-
-html.dark ::-moz-selection {
-  background-color: rgba(255, 92, 41, 0.18);
-  color: #ff8a63;
-}
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
