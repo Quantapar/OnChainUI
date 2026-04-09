@@ -283,15 +283,9 @@ export function ComponentPreview() {
                       ? "border-[#ff5c29]/15 bg-white/60 dark:border-[#ff5c29]/15 dark:bg-zinc-900/60"
                       : "border-zinc-100 bg-zinc-50/60 dark:border-zinc-800 dark:bg-zinc-900/60"
                   }`}>
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                        {component.name}
-                      </h3>
-                      <ArrowUpRight className="h-3.5 w-3.5 text-zinc-300 transition-all duration-300 group-hover:text-zinc-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 dark:text-zinc-600 dark:group-hover:text-zinc-300" />
-                    </div>
-                    <p className="mt-0.5 text-xs text-zinc-500 line-clamp-1 dark:text-zinc-400">
-                      {component.description}
-                    </p>
+                    <h3 className="text-center text-base font-semibold text-zinc-900 dark:text-zinc-100">
+                      {component.name}
+                    </h3>
                   </div>
                 </Link>
               </ScrollReveal>

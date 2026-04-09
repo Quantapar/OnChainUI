@@ -5,9 +5,9 @@ const RESOURCE_LINKS = [
 ];
 
 const COMMUNITY_LINKS = [
-  { label: "GitHub", href: "https://github.com" },
-  { label: "Twitter", href: "https://twitter.com" },
-  { label: "Discord", href: "https://discord.com" },
+  { label: "GitHub", href: "https://github.com/Quantapar/OnChainUI" },
+  { label: "Twitter", href: "https://x.com/quantapar" },
+  { label: "Discord", href: "https://discord.com/users/762906412564217857" },
 ];
 
 export function Footer() {
