@@ -1,5 +1,6 @@
 import { ExternalLink, Menu, X } from "lucide-react";
 import { forwardRef, useState } from "react";
+import { ThemeToggle } from "../ThemeToggle";
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -27,8 +28,8 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
     <nav ref={ref}>
       <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a href="/" className="flex cursor-pointer items-center gap-1.5">
-          <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7" />
-          <span className="text-[15px] font-semibold text-zinc-900">
+          <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7 dark:invert" />
+          <span className="text-[15px] font-semibold text-zinc-900 dark:text-zinc-100">
             OnChainUI
           </span>
         </a>
@@ -38,7 +39,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
             <a
               key={link.label}
               href={link.href}
-              className="cursor-pointer text-[13px] font-medium uppercase tracking-wide text-zinc-500 transition-[color] duration-150 ease-out hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm"
+              className="cursor-pointer text-[13px] font-medium uppercase tracking-wide text-zinc-500 transition-[color] duration-150 ease-out hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm dark:text-zinc-400 dark:hover:text-zinc-100 dark:focus-visible:ring-zinc-100"
             >
               {link.label}
             </a>
@@ -46,11 +47,12 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           <a
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex cursor-pointer items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-[14px] text-zinc-700 transition-[color,background-color,border-color] duration-150 ease-out hover:bg-zinc-50 hover:border-zinc-300 hover:text-zinc-900 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+            className="flex cursor-pointer items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-[14px] text-zinc-700 transition-[color,background-color,border-color] duration-150 ease-out hover:bg-zinc-50 hover:border-zinc-300 hover:text-zinc-900 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:hover:text-zinc-100"
           >
             <GitHubIcon className="h-4 w-4" />
             GitHub
@@ -59,24 +61,27 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
           </a>
           <a
             href="#get-started"
-            className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2 text-[14px] font-medium text-white transition-transform duration-150 ease-out hover:bg-zinc-800 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+            className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2 text-[14px] font-medium text-white transition-transform duration-150 ease-out hover:bg-zinc-800 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
           >
             Get Started
           </a>
         </div>
 
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="cursor-pointer text-zinc-600 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm"
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="cursor-pointer text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm dark:text-zinc-400 dark:focus-visible:ring-zinc-100"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
         >
-          {mobileOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </button>
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
@@ -91,7 +96,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="cursor-pointer rounded-lg px-3 py-2.5 text-[15px] text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
+                className="cursor-pointer rounded-lg px-3 py-2.5 text-[15px] text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
               >
                 {link.label}
               </a>
@@ -101,7 +106,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex cursor-pointer items-center justify-center gap-2 rounded-full border border-zinc-200 px-4 py-2.5 text-[14px] text-zinc-700"
+                className="flex cursor-pointer items-center justify-center gap-2 rounded-full border border-zinc-200 px-4 py-2.5 text-[14px] text-zinc-700 dark:border-zinc-800 dark:text-zinc-300"
               >
                 <GitHubIcon className="h-4 w-4" />
                 GitHub
@@ -110,7 +115,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
               </a>
               <a
                 href="#get-started"
-                className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2.5 text-center text-[14px] font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97]"
+                className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2.5 text-center text-[14px] font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97] dark:bg-zinc-100 dark:text-zinc-900"
               >
                 Get Started
               </a>

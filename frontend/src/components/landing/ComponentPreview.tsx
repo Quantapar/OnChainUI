@@ -34,11 +34,11 @@ function ConnectWalletPreview() {
   if (connected) {
     return (
       <div className="flex flex-col items-center gap-4">
-        <div className="flex items-center gap-3 rounded-full border border-zinc-200 bg-white px-4 py-2.5 shadow-sm">
+        <div className="flex items-center gap-3 rounded-full border border-zinc-200 bg-white px-4 py-2.5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
           <div className="h-8 w-8 rounded-full bg-gradient-to-br from-violet-400 via-fuchsia-300 to-indigo-500" />
           <div className="text-left">
-            <p className="text-sm font-medium text-zinc-900">vitalik.eth</p>
-            <p className="font-mono text-[11px] text-zinc-400">0x1a2b…9f3e</p>
+            <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">vitalik.eth</p>
+            <p className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">0x1a2b…9f3e</p>
           </div>
           <span className="ml-1 h-2 w-2 rounded-full bg-green-400" />
         </div>
@@ -47,7 +47,7 @@ function ConnectWalletPreview() {
             e.preventDefault();
             setConnected(false);
           }}
-          className="cursor-pointer text-xs text-zinc-400 transition-colors hover:text-zinc-600"
+          className="cursor-pointer rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-500 transition-colors hover:border-zinc-300 hover:text-zinc-800 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
         >
           Disconnect
         </button>
@@ -58,16 +58,16 @@ function ConnectWalletPreview() {
   return (
     <div className="flex flex-col items-center gap-5">
       <div className="flex gap-3">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
           <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" className="h-6 w-6" />
         </div>
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
           <svg viewBox="0 0 32 32" className="h-6 w-6" fill="none">
             <rect width="32" height="32" rx="8" fill="#3B99FC" />
             <path d="M10.5 12.5c3-3 8-3 11 0l.4.3a.4.4 0 010 .5l-1.2 1.2a.2.2 0 01-.3 0l-.5-.5a5.5 5.5 0 00-7.7 0l-.5.5a.2.2 0 01-.3 0l-1.2-1.2a.4.4 0 010-.5l.3-.3zm13.6 2.5l1 1a.4.4 0 010 .5l-4.7 4.7a.4.4 0 01-.5 0l-3.3-3.3a.1.1 0 00-.2 0l-3.3 3.3a.4.4 0 01-.5 0l-4.7-4.7a.4.4 0 010-.5l1-1a.4.4 0 01.6 0l3.3 3.3a.1.1 0 00.1 0l3.3-3.3a.4.4 0 01.6 0l3.3 3.3a.1.1 0 00.1 0l3.3-3.3a.4.4 0 01.6 0z" fill="white"/>
           </svg>
         </div>
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
           <svg viewBox="0 0 32 32" className="h-6 w-6" fill="none">
             <rect width="32" height="32" rx="8" fill="#0052FF" />
             <path d="M16 6a10 10 0 100 20 10 10 0 000-20zm0 3.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13z" fill="white"/>
@@ -79,7 +79,7 @@ function ConnectWalletPreview() {
           e.preventDefault();
           setConnected(true);
         }}
-        className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-white transition-transform duration-150 active:scale-[0.97]"
+        className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-white transition-transform duration-150 active:scale-[0.97] dark:bg-zinc-100 dark:text-zinc-900"
       >
         <Wallet className="h-4 w-4" />
         Connect Wallet
@@ -94,15 +94,15 @@ function TokenBalancePreview() {
       <div className="flex items-center gap-3">
         <TokenETH variant="branded" size={32} />
         <div>
-          <p className="text-sm font-semibold tabular-nums text-zinc-900">1.2345 ETH</p>
-          <p className="text-xs tabular-nums text-zinc-400">$4,321.00</p>
+          <p className="text-sm font-semibold tabular-nums text-zinc-900 dark:text-zinc-100">1.2345 ETH</p>
+          <p className="text-xs tabular-nums text-zinc-500 dark:text-zinc-400">$4,321.00</p>
         </div>
       </div>
       <div className="flex items-center gap-3">
         <TokenUSDC variant="branded" size={32} />
         <div>
-          <p className="text-sm font-semibold tabular-nums text-zinc-900">2,500.00 USDC</p>
-          <p className="text-xs tabular-nums text-zinc-400">$2,500.00</p>
+          <p className="text-sm font-semibold tabular-nums text-zinc-900 dark:text-zinc-100">2,500.00 USDC</p>
+          <p className="text-xs tabular-nums text-zinc-500 dark:text-zinc-400">$2,500.00</p>
         </div>
       </div>
     </div>
@@ -129,15 +129,15 @@ function ChainSelectorPreview() {
           e.preventDefault();
           setOpen(!open);
         }}
-        className="flex w-full cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 transition-colors hover:border-zinc-300"
+        className="flex w-full cursor-pointer items-center gap-2 rounded-xl border border-zinc-200 bg-white px-3 py-2 transition-colors hover:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-zinc-600"
       >
         <current.icon variant="branded" size={20} />
-        <span className="flex-1 text-left text-sm font-medium text-zinc-700">{current.name}</span>
-        <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+        <span className="flex-1 text-left text-sm font-medium text-zinc-700 dark:text-zinc-200">{current.name}</span>
+        <ChevronDown className={`h-4 w-4 text-zinc-500 transition-transform duration-200 dark:text-zinc-400 ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 z-10 mt-1.5 w-full rounded-xl border border-zinc-200 bg-white py-1 shadow-lg">
+        <div className="absolute top-full left-0 z-10 mt-1.5 w-full rounded-xl border border-zinc-200 bg-white py-1 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
           {chains.map((chain, i) => (
             <button
               key={chain.name}
@@ -146,7 +146,7 @@ function ChainSelectorPreview() {
                 setSelected(i);
                 setOpen(false);
               }}
-              className={`flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-zinc-50 ${i === selected ? "text-zinc-900 font-medium" : "text-zinc-600"}`}
+              className={`flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800 ${i === selected ? "text-zinc-900 font-medium dark:text-zinc-100" : "text-zinc-600 dark:text-zinc-400"}`}
             >
               <chain.icon variant="branded" size={18} />
               {chain.name}
@@ -169,17 +169,17 @@ function AddressDisplayPreview() {
   };
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3">
+    <div className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900">
       <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-amber-300 via-rose-400 to-indigo-500" />
       <div className="min-w-0">
-        <p className="text-sm font-medium text-zinc-900">vitalik.eth</p>
-        <p className="truncate font-mono text-xs text-zinc-400">0x1a2b…9f3e</p>
+        <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">vitalik.eth</p>
+        <p className="truncate font-mono text-xs text-zinc-500 dark:text-zinc-400">0x1a2b…9f3e</p>
       </div>
       <button
         onClick={handleCopy}
-        className="ml-auto flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600"
+        className="ml-auto flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
       >
-        {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
+        {copied ? <Check className="h-3.5 w-3.5 text-brand" /> : <Copy className="h-3.5 w-3.5" />}
       </button>
     </div>
   );
@@ -187,8 +187,8 @@ function AddressDisplayPreview() {
 
 function TransactionFeedPreview() {
   const transactions = [
-    { type: "sent", label: "Sent ETH", to: "0x8f3a…c2d1", amount: "-0.5 ETH", color: "text-zinc-900" },
-    { type: "received", label: "Received USDC", to: "0x4b7e…a9f3", amount: "+250 USDC", color: "text-green-600" },
+    { type: "sent", label: "Sent ETH", to: "0x8f3a…c2d1", amount: "-0.5 ETH", color: "text-zinc-900 dark:text-zinc-100" },
+    { type: "received", label: "Received USDC", to: "0x4b7e…a9f3", amount: "+250 USDC", color: "text-green-600 dark:text-green-400" },
   ];
 
   return (
@@ -196,19 +196,19 @@ function TransactionFeedPreview() {
       {transactions.map((tx) => (
         <div
           key={tx.label + tx.to}
-          className="flex items-center justify-between rounded-lg px-2 py-2 transition-colors hover:bg-zinc-50"
+          className="flex items-center justify-between rounded-lg px-2 py-2 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
         >
           <div className="flex items-center gap-2.5">
-            <div className={`flex h-8 w-8 items-center justify-center rounded-full ${tx.type === "sent" ? "bg-zinc-100" : "bg-green-50"}`}>
+            <div className={`flex h-8 w-8 items-center justify-center rounded-full ${tx.type === "sent" ? "bg-zinc-100 dark:bg-zinc-800" : "bg-green-50 dark:bg-green-950/40"}`}>
               {tx.type === "sent" ? (
-                <ArrowUpRight className="h-4 w-4 text-zinc-600" />
+                <ArrowUpRight className="h-4 w-4 text-zinc-600 dark:text-zinc-300" />
               ) : (
-                <ArrowDownLeft className="h-4 w-4 text-green-600" />
+                <ArrowDownLeft className="h-4 w-4 text-green-600 dark:text-green-400" />
               )}
             </div>
             <div>
-              <p className="text-xs font-medium text-zinc-900">{tx.label}</p>
-              <p className="font-mono text-[11px] text-zinc-400">{tx.to}</p>
+              <p className="text-xs font-medium text-zinc-900 dark:text-zinc-100">{tx.label}</p>
+              <p className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">{tx.to}</p>
             </div>
           </div>
           <p className={`text-xs font-semibold tabular-nums ${tx.color}`}>{tx.amount}</p>
@@ -225,13 +225,13 @@ function NetworkStatusPreview() {
         <NetworkEthereum variant="branded" size={20} />
         <div className="flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-green-400" />
-          <span className="text-xs font-medium text-green-600">Healthy</span>
+          <span className="text-xs font-medium text-green-600 dark:text-green-400">Healthy</span>
         </div>
       </div>
-      <div className="h-4 w-px bg-zinc-200" />
-      <span className="text-xs tabular-nums text-zinc-500">12 gwei</span>
-      <div className="h-4 w-px bg-zinc-200" />
-      <span className="font-mono text-xs tabular-nums text-zinc-500">#19,234,567</span>
+      <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+      <span className="text-xs tabular-nums text-zinc-500 dark:text-zinc-400">12 gwei</span>
+      <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+      <span className="font-mono text-xs tabular-nums text-zinc-500 dark:text-zinc-400">#19,234,567</span>
     </div>
   );
 }
@@ -247,13 +247,13 @@ const PREVIEW_MAP: Record<string, React.ReactNode> = {
 
 export function ComponentPreview() {
   return (
-    <section id="components" className="border-t border-zinc-100">
+    <section id="components" className="border-t border-zinc-100 dark:border-zinc-900">
       <div className="mx-auto max-w-6xl px-6 py-12">
         <ScrollReveal className="mx-auto w-full text-center">
-          <h2 className="mx-auto text-3xl font-normal tracking-tight text-zinc-900 md:text-4xl">
+          <h2 className="mx-auto text-4xl font-normal tracking-tight text-zinc-900 md:text-5xl dark:text-zinc-50">
             Component Preview
           </h2>
-          <p className="mx-auto mt-3 text-zinc-500">
+          <p className="mx-auto mt-3 text-zinc-600 dark:text-zinc-400">
             A taste of what&#8217;s inside. Copy the code and start building.
           </p>
         </ScrollReveal>
@@ -263,23 +263,33 @@ export function ComponentPreview() {
             const component = COMPONENTS.find((c) => c.slug === item.slug);
             if (!component) return null;
 
+            const isHero = item.slug === "connect-wallet";
+
             return (
               <ScrollReveal key={item.slug} delay={i * 0.08} distance={24} className={`h-full ${item.colSpan} ${item.rowSpan}`}>
                 <Link
                   to={`/components/${item.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lg hover:border-zinc-300"
+                  className={`group flex h-full flex-col overflow-hidden rounded-2xl border shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lg ${
+                    isHero
+                      ? "border-[#ff5c29]/20 bg-gradient-to-br from-[#fff5f1] via-white to-white hover:border-[#ff5c29]/40 dark:border-[#ff5c29]/20 dark:from-[#ff5c29]/10 dark:via-zinc-900 dark:to-zinc-900 dark:hover:border-[#ff5c29]/40"
+                      : "border-zinc-200/80 bg-white hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                  }`}
                 >
                   <div className="flex min-h-0 flex-1 items-center justify-center p-6">
                     {PREVIEW_MAP[item.slug]}
                   </div>
-                  <div className="shrink-0 border-t border-zinc-100 bg-zinc-50/60 px-4 py-3">
+                  <div className={`shrink-0 border-t px-4 py-3 ${
+                    isHero
+                      ? "border-[#ff5c29]/15 bg-white/60 dark:border-[#ff5c29]/15 dark:bg-zinc-900/60"
+                      : "border-zinc-100 bg-zinc-50/60 dark:border-zinc-800 dark:bg-zinc-900/60"
+                  }`}>
                     <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-zinc-900">
+                      <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
                         {component.name}
                       </h3>
-                      <ArrowUpRight className="h-3.5 w-3.5 text-zinc-300 transition-all duration-300 group-hover:text-zinc-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      <ArrowUpRight className="h-3.5 w-3.5 text-zinc-300 transition-all duration-300 group-hover:text-zinc-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 dark:text-zinc-600 dark:group-hover:text-zinc-300" />
                     </div>
-                    <p className="mt-0.5 text-xs text-zinc-400 line-clamp-1">
+                    <p className="mt-0.5 text-xs text-zinc-500 line-clamp-1 dark:text-zinc-400">
                       {component.description}
                     </p>
                   </div>
@@ -293,7 +303,7 @@ export function ComponentPreview() {
           <div className="mt-8 text-center">
             <Link
               to="/components"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-150 ease-out hover:bg-zinc-800 active:scale-[0.97]"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-all duration-150 ease-out hover:bg-zinc-800 active:scale-[0.97] dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
             >
               View all components
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">

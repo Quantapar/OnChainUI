@@ -36,14 +36,14 @@ export function FloatingNav({ navbarRef }: { navbarRef: React.RefObject<HTMLElem
       }}
     >
       <a href="/" className="mb-8 block cursor-pointer">
-        <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7" />
+        <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7 dark:invert" />
       </a>
       <div className="flex flex-col gap-1">
         {NAV_LINKS.map((link, i) => (
           <a
             key={link.label}
             href={link.href}
-            className="cursor-pointer py-1.5 text-[13px] font-semibold text-zinc-500 transition-colors hover:text-zinc-900"
+            className="cursor-pointer py-1.5 text-[13px] font-semibold text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
             style={{
               transitionDuration: "150ms",
               transitionTimingFunction: "cubic-bezier(0.23, 1, 0.32, 1)",
