@@ -258,7 +258,7 @@ export function ComponentPreview() {
           </p>
         </ScrollReveal>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[200px]">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[200px]">
           {BENTO_LAYOUT.map((item, i) => {
             const component = COMPONENTS.find((c) => c.slug === item.slug);
             if (!component) return null;
@@ -267,16 +267,19 @@ export function ComponentPreview() {
               <ScrollReveal key={item.slug} delay={i * 0.08} distance={24} className={`h-full ${item.colSpan} ${item.rowSpan}`}>
                 <Link
                   to={`/components/${item.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lg hover:border-zinc-300"
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lg hover:border-zinc-300"
                 >
-                  <div className="flex min-h-0 flex-1 items-center justify-center rounded-t-xl bg-zinc-50/50 p-6">
+                  <div className="flex min-h-0 flex-1 items-center justify-center p-6">
                     {PREVIEW_MAP[item.slug]}
                   </div>
-                  <div className="shrink-0 border-t border-zinc-100 px-4 py-3">
-                    <h3 className="font-mono text-sm font-semibold text-zinc-900">
-                      {component.name}
-                    </h3>
-                    <p className="mt-1 text-sm text-zinc-500 line-clamp-1">
+                  <div className="shrink-0 border-t border-zinc-100 bg-zinc-50/60 px-4 py-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-semibold text-zinc-900">
+                        {component.name}
+                      </h3>
+                      <ArrowUpRight className="h-3.5 w-3.5 text-zinc-300 transition-all duration-300 group-hover:text-zinc-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
+                    <p className="mt-0.5 text-xs text-zinc-400 line-clamp-1">
                       {component.description}
                     </p>
                   </div>
