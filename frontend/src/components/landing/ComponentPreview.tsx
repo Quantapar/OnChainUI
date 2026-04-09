@@ -263,28 +263,18 @@ export function ComponentPreview() {
             const component = COMPONENTS.find((c) => c.slug === item.slug);
             if (!component) return null;
 
-            const isHero = item.slug === "connect-wallet";
-
             return (
               <ScrollReveal key={item.slug} delay={i * 0.08} distance={24} className={`h-full ${item.colSpan} ${item.rowSpan}`}>
                 <Link
                   to={`/components/${item.slug}`}
-                  className={`group flex h-full flex-col overflow-hidden rounded-2xl border shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lg ${
-                    isHero
-                      ? "border-[#ff5c29]/20 bg-gradient-to-br from-[#fff5f1] via-white to-white hover:border-[#ff5c29]/40 dark:border-[#ff5c29]/20 dark:from-[#ff5c29]/10 dark:via-zinc-900 dark:to-zinc-900 dark:hover:border-[#ff5c29]/40"
-                      : "border-zinc-200/80 bg-white hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
-                  }`}
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
                 >
                   <div className="flex min-h-0 flex-1 items-center justify-center p-6">
                     {PREVIEW_MAP[item.slug]}
                   </div>
-                  <div className={`shrink-0 border-t px-4 py-3 ${
-                    isHero
-                      ? "border-[#ff5c29]/15 bg-white/60 dark:border-[#ff5c29]/15 dark:bg-zinc-900/60"
-                      : "border-zinc-100 bg-zinc-50/60 dark:border-zinc-800 dark:bg-zinc-900/60"
-                  }`}>
-                    <h3 className="text-center text-base font-semibold text-zinc-900 dark:text-zinc-100">
-                      {component.name}
+                  <div className="shrink-0 border-t border-zinc-200/80 bg-zinc-50 px-4 py-4 dark:border-zinc-800 dark:bg-zinc-900">
+                    <h3 className="text-center font-display text-lg text-zinc-900 [word-spacing:0.1em] dark:text-zinc-50">
+                      {component.name.replace(/([a-z])([A-Z])/g, "$1 $2")}
                     </h3>
                   </div>
                 </Link>
