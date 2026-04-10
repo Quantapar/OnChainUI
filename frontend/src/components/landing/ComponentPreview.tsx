@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router";
 import { ScrollReveal } from "../ScrollReveal";
 import { COMPONENTS } from "../../data/components";
@@ -179,7 +180,29 @@ function AddressDisplayPreview() {
         onClick={handleCopy}
         className="ml-auto flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
       >
-        {copied ? <Check className="h-3.5 w-3.5 text-brand" /> : <Copy className="h-3.5 w-3.5" />}
+        <AnimatePresence mode="wait" initial={false}>
+          {copied ? (
+            <motion.span
+              key="check"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Check className="h-3.5 w-3.5 text-brand" />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="copy"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Copy className="h-3.5 w-3.5" />
+            </motion.span>
+          )}
+        </AnimatePresence>
       </button>
     </div>
   );

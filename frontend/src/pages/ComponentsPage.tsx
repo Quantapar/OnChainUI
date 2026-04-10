@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link, useParams, useNavigate, Navigate } from "react-router";
 import { Check, Copy, ChevronRight, Menu, X } from "lucide-react";
 import { COMPONENTS, CATEGORIES } from "../data/components";
@@ -57,11 +58,31 @@ function CodeBlock({ code, compact }: { code: string; compact?: boolean }) {
         className="absolute right-3 top-3 cursor-pointer rounded-lg bg-zinc-800 px-2.5 py-1 text-[11px] font-medium text-zinc-400 opacity-0 transition-all duration-150 hover:bg-zinc-700 hover:text-zinc-200 group-hover:opacity-100"
         aria-label={copied ? "Copied" : "Copy code"}
       >
-        {copied ? (
-          <span className="flex items-center gap-1"><Check className="h-3 w-3" /> Copied</span>
-        ) : (
-          <span className="flex items-center gap-1"><Copy className="h-3 w-3" /> Copy</span>
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          {copied ? (
+            <motion.span
+              key="copied"
+              className="flex items-center gap-1"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Check className="h-3 w-3" /> Copied
+            </motion.span>
+          ) : (
+            <motion.span
+              key="copy"
+              className="flex items-center gap-1"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Copy className="h-3 w-3" /> Copy
+            </motion.span>
+          )}
+        </AnimatePresence>
       </button>
       <pre className={`overflow-x-auto font-mono leading-relaxed text-zinc-300 ${compact ? "text-xs" : "text-[13px]"}`}>
         <code>{code}</code>

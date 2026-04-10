@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, Copy } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   NetworkEthereum,
   NetworkArbitrumOne,
@@ -175,11 +175,29 @@ export function Hero() {
             })}
           </code>
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-500 transition-[border-color,color] duration-150 ease-out group-hover:border-zinc-300 group-hover:text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:group-hover:border-zinc-700 dark:group-hover:text-zinc-200">
-            {isCopied ? (
-              <Check className="h-3.5 w-3.5 text-brand" />
-            ) : (
-              <Copy className="h-3.5 w-3.5" />
-            )}
+            <AnimatePresence mode="wait" initial={false}>
+              {isCopied ? (
+                <motion.span
+                  key="check"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <Check className="h-3.5 w-3.5 text-brand" />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="copy"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                </motion.span>
+              )}
+            </AnimatePresence>
           </span>
         </button>
       </motion.div>
