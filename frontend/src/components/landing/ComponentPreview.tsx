@@ -272,7 +272,7 @@ export function ComponentPreview() {
                   <div className="flex min-h-0 flex-1 items-center justify-center p-6">
                     {PREVIEW_MAP[item.slug]}
                   </div>
-                  <div className="shrink-0 border-t border-zinc-200/80 bg-zinc-50 px-4 py-4 dark:border-[#1e1e22] dark:bg-[#111113]">
+                  <div className="shrink-0 border-t border-zinc-200/80 bg-zinc-50 px-4 py-4 dark:border-[#1e1e22] dark:bg-[#0c0c0e]">
                     <h3 className="text-center font-display text-lg text-zinc-900 [word-spacing:0.1em] dark:text-zinc-50">
                       {component.name.replace(/([a-z])([A-Z])/g, "$1 $2")}
                     </h3>
