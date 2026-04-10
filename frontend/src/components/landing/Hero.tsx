@@ -134,13 +134,20 @@ export function Hero() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActivePm(pm.id)}
-                className={`cursor-pointer rounded-full px-3 py-1 text-xs font-medium transition-colors duration-150 ${
+                className={`relative cursor-pointer rounded-full px-3 py-1 text-xs font-medium transition-colors duration-150 ${
                   isActive
-                    ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                    ? "text-white dark:text-zinc-900"
                     : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                 }`}
               >
-                {pm.id}
+                {isActive && (
+                  <motion.span
+                    layoutId="pm-tab-indicator"
+                    className="absolute inset-0 rounded-full bg-zinc-900 dark:bg-zinc-100"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{pm.id}</span>
               </button>
             );
           })}
