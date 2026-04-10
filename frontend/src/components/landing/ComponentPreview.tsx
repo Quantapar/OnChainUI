@@ -267,12 +267,12 @@ export function ComponentPreview() {
               <ScrollReveal key={item.slug} delay={i * 0.08} distance={24} className={`h-full ${item.colSpan} ${item.rowSpan}`}>
                 <Link
                   to={`/components/${item.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700"
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-lg dark:border-[#1e1e22] dark:bg-[#111113] dark:hover:border-[#2a2a2e]"
                 >
                   <div className="flex min-h-0 flex-1 items-center justify-center p-6">
                     {PREVIEW_MAP[item.slug]}
                   </div>
-                  <div className="shrink-0 border-t border-zinc-200/80 bg-zinc-50 px-4 py-4 dark:border-zinc-800 dark:bg-zinc-900">
+                  <div className="shrink-0 border-t border-zinc-200/80 bg-zinc-50 px-4 py-4 dark:border-[#1e1e22] dark:bg-[#111113]">
                     <h3 className="text-center font-display text-lg text-zinc-900 [word-spacing:0.1em] dark:text-zinc-50">
                       {component.name.replace(/([a-z])([A-Z])/g, "$1 $2")}
                     </h3>
