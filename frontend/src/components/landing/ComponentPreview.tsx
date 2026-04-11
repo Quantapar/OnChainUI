@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router";
 import { ScrollReveal } from "../ScrollReveal";
@@ -6,9 +6,13 @@ import { COMPONENTS } from "../../data/components";
 import {
   ArrowUpRight,
   ArrowDownLeft,
+  ArrowLeftRight,
   ChevronDown,
   Copy,
   Check,
+  FileSearch,
+  Globe,
+  Send,
   Wallet,
 } from "lucide-react";
 import {
@@ -26,7 +30,7 @@ const BENTO_LAYOUT = [
   { slug: "chain-selector", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "address-display", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "transaction-feed", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
-  { slug: "network-status", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
+  { slug: "dapp-toolbar", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
 ];
 
 function ConnectWalletPreview() {
@@ -259,6 +263,124 @@ function NetworkStatusPreview() {
   );
 }
 
+function DAppToolbarPreview() {
+  const [activeId, setActiveId] = useState("wallet");
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [direction, setDirection] = useState(0);
+
+  const items = [
+    { id: "wallet", label: "Wallet", icon: <Wallet size={14} /> },
+    { id: "swap", label: "Swap", icon: <ArrowLeftRight size={14} /> },
+    { id: "send", label: "Send", icon: <Send size={14} /> },
+    { id: "bridge", label: "Bridge", icon: <Globe size={14} /> },
+    { id: "explorer", label: "Explorer", icon: <FileSearch size={14} /> },
+  ];
+
+  const separator = 2;
+
+  const handleHover = (id: string | null) => {
+    if (hoveredId !== null && id !== null) {
+      const prevIndex = items.findIndex((item) => item.id === hoveredId);
+      const nextIndex = items.findIndex((item) => item.id === id);
+      setDirection(nextIndex > prevIndex ? 1 : -1);
+    }
+    setHoveredId(id);
+  };
+
+  const hoveredItem = items.find((item) => item.id === hoveredId);
+  const hoveredIndex = items.findIndex((item) => item.id === hoveredId);
+
+  const ITEM_SIZE = 32;
+  const GAP = 4;
+  const PADDING = 10;
+  const SEPARATOR_WIDTH = 9;
+
+  const getItemX = (index: number) => {
+    let x = PADDING + index * (ITEM_SIZE + GAP);
+    if (index > separator) x += SEPARATOR_WIDTH;
+    return x;
+  };
+
+  const bgX = hoveredItem ? getItemX(hoveredIndex) : 0;
+  const tooltipX = hoveredItem ? getItemX(hoveredIndex) + ITEM_SIZE / 2 : 0;
+
+  return (
+    <div
+      className="relative flex items-center gap-1 rounded-full border border-zinc-200 bg-white px-2.5 py-1.5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
+      onMouseLeave={() => setHoveredId(null)}
+    >
+      <AnimatePresence>
+        {hoveredId && (
+          <motion.div
+            className="absolute top-1/2 left-0 -translate-y-1/2 rounded-lg bg-zinc-100 dark:bg-zinc-800"
+            style={{ width: ITEM_SIZE, height: ITEM_SIZE }}
+            initial={{ opacity: 0, x: bgX, scale: 0.95 }}
+            animate={{ opacity: 1, x: bgX, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          />
+        )}
+      </AnimatePresence>
+
+      {items.map((item, index) => (
+        <React.Fragment key={item.id}>
+          {index === separator + 1 && (
+            <div className="mx-0.5 h-4 w-px bg-zinc-200 dark:bg-zinc-700" />
+          )}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveId(item.id);
+            }}
+            onMouseEnter={() => handleHover(item.id)}
+            className={`relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg transition-colors duration-200 active:scale-[0.95] ${
+              activeId === item.id
+                ? "text-zinc-900 dark:text-white"
+                : "text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-white"
+            }`}
+          >
+            <span className="relative z-10">{item.icon}</span>
+            {activeId === item.id && (
+              <motion.div
+                layoutId="toolbar-active-dot"
+                className="absolute -bottom-0.5 h-1 w-1 rounded-full bg-zinc-900 dark:bg-white"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+          </button>
+        </React.Fragment>
+      ))}
+
+      <AnimatePresence>
+        {hoveredItem && (
+          <motion.div
+            key="toolbar-tooltip"
+            className="pointer-events-none absolute -top-10 left-0 z-50 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
+            initial={{ opacity: 0, y: 6, scale: 0.95, x: tooltipX, translateX: "-50%" }}
+            animate={{ opacity: 1, y: 0, scale: 1, x: tooltipX, translateX: "-50%" }}
+            exit={{ opacity: 0, y: 6, scale: 0.95, transition: { duration: 0.12 } }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          >
+            <AnimatePresence mode="popLayout" initial={false} custom={direction}>
+              <motion.span
+                key={hoveredItem.id}
+                className="block text-[11px] font-medium text-zinc-900 dark:text-white"
+                custom={direction}
+                initial={{ opacity: 0, y: direction * 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: direction * -8 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
+                {hoveredItem.label}
+              </motion.span>
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 const PREVIEW_MAP: Record<string, React.ReactNode> = {
   "connect-wallet": <ConnectWalletPreview />,
   "token-balance": <TokenBalancePreview />,
@@ -266,6 +388,7 @@ const PREVIEW_MAP: Record<string, React.ReactNode> = {
   "address-display": <AddressDisplayPreview />,
   "transaction-feed": <TransactionFeedPreview />,
   "network-status": <NetworkStatusPreview />,
+  "dapp-toolbar": <DAppToolbarPreview />,
 };
 
 export function ComponentPreview() {
@@ -290,7 +413,7 @@ export function ComponentPreview() {
               <ScrollReveal key={item.slug} delay={i * 0.08} distance={24} className={`h-full ${item.colSpan} ${item.rowSpan}`}>
                 <Link
                   to={`/components/${item.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-zinc-300 hover:shadow-lg dark:border-[#1e1e22] dark:bg-[#111113] dark:hover:border-[#2a2a2e]"
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-[rgba(0,0,0,0.06)_0px_54px_55px,rgba(0,0,0,0.05)_0px_-12px_30px,rgba(0,0,0,0.04)_0px_4px_6px,rgba(0,0,0,0.02)_0px_12px_13px,rgba(0,0,0,0.02)_0px_-3px_5px] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-zinc-300 dark:border-[#1e1e22] dark:bg-[#111113] dark:shadow-[rgba(0,0,0,0.42)_0px_54px_55px,rgba(0,0,0,0.36)_0px_-12px_30px,rgba(0,0,0,0.20)_0px_4px_6px,rgba(0,0,0,0.10)_0px_12px_13px,rgba(0,0,0,0.09)_0px_-3px_5px] dark:hover:border-[#2a2a2e]"
                 >
                   <div className="flex min-h-0 flex-1 items-center justify-center p-6">
                     {PREVIEW_MAP[item.slug]}

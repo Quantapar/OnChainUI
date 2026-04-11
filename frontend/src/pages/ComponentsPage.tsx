@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link, useParams, useNavigate, Navigate } from "react-router";
-import { Check, Copy, ChevronRight, Menu, X } from "lucide-react";
+import {
+  Check, Copy, ChevronRight, Menu, X,
+  Wallet, ArrowLeftRight, Send, Globe, FileSearch,
+} from "lucide-react";
 import { COMPONENTS, CATEGORIES } from "../data/components";
 import type { ComponentMeta } from "../data/components";
 import { ThemeToggle } from "../components/ThemeToggle";
@@ -52,51 +55,49 @@ function CodeBlock({ code, compact }: { code: string; compact?: boolean }) {
   };
 
   return (
-    <div className={`group relative overflow-hidden rounded-xl bg-zinc-950 ${compact ? "p-3" : "p-5"}`}>
+    <div className={`group flex gap-2 rounded-xl border border-zinc-200 bg-zinc-50 dark:border-[#1e1e22] dark:bg-[#111113] ${compact ? "items-center px-4 py-3" : "items-start p-5"}`}>
+      <pre className={`min-w-0 flex-1 overflow-x-auto font-mono leading-relaxed text-zinc-700 dark:text-zinc-300 ${compact ? "text-xs" : "max-h-[320px] overflow-y-auto text-[13px]"}`}>
+        <code>{code}</code>
+      </pre>
       <button
         onClick={handleCopy}
-        className="absolute right-3 top-3 cursor-pointer rounded-lg bg-zinc-800 px-2.5 py-1 text-[11px] font-medium text-zinc-400 opacity-0 transition-all duration-150 hover:bg-zinc-700 hover:text-zinc-200 group-hover:opacity-100"
+        className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border border-zinc-300 text-zinc-400 transition-[border-color,color] duration-150 ease-out hover:border-zinc-400 hover:text-zinc-600 dark:border-zinc-700 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
         aria-label={copied ? "Copied" : "Copy code"}
       >
         <AnimatePresence mode="wait" initial={false}>
           {copied ? (
             <motion.span
               key="copied"
-              className="flex items-center gap-1"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+              exit={{ scale: 0, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <Check className="h-3 w-3" /> Copied
+              <Check className="h-3.5 w-3.5 text-brand" />
             </motion.span>
           ) : (
             <motion.span
               key="copy"
-              className="flex items-center gap-1"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+              exit={{ scale: 0, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <Copy className="h-3 w-3" /> Copy
+              <Copy className="h-3.5 w-3.5" />
             </motion.span>
           )}
         </AnimatePresence>
       </button>
-      <pre className={`overflow-x-auto font-mono leading-relaxed text-zinc-300 ${compact ? "text-xs" : "text-[13px]"}`}>
-        <code>{code}</code>
-      </pre>
     </div>
   );
 }
 
 function PropsTable({ component }: { component: ComponentMeta }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
+    <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-[#1e1e22]">
       <table className="w-full text-left text-[13px]">
         <thead>
-          <tr className="border-b border-zinc-200 bg-zinc-50/80 dark:border-zinc-800 dark:bg-zinc-900/60">
+          <tr className="border-b border-zinc-200 bg-zinc-50/80 dark:border-[#1e1e22] dark:bg-[#111113]">
             <th className="whitespace-nowrap px-5 py-3 font-semibold text-zinc-900 dark:text-zinc-100">Prop</th>
             <th className="whitespace-nowrap px-5 py-3 font-semibold text-zinc-900 dark:text-zinc-100">Type</th>
             <th className="whitespace-nowrap px-5 py-3 font-semibold text-zinc-900 dark:text-zinc-100">Default</th>
@@ -107,7 +108,7 @@ function PropsTable({ component }: { component: ComponentMeta }) {
           {component.props.map((prop, i) => (
             <tr
               key={prop.name}
-              className={`transition-colors hover:bg-zinc-50/50 dark:hover:bg-zinc-900/40 ${i < component.props.length - 1 ? "border-b border-zinc-100 dark:border-zinc-800" : ""}`}
+              className={`transition-colors hover:bg-zinc-50/50 dark:hover:bg-zinc-900/40 ${i < component.props.length - 1 ? "border-b border-zinc-100 dark:border-[#1e1e22]" : ""}`}
             >
               <td className="whitespace-nowrap px-5 py-3">
                 <code className="rounded-md bg-zinc-100 px-1.5 py-0.5 font-mono text-xs font-medium text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200">
@@ -137,6 +138,125 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+function DAppToolbarLivePreview() {
+  const [activeId, setActiveId] = useState("wallet");
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [direction, setDirection] = useState(0);
+
+  const items = [
+    { id: "wallet", label: "Wallet", icon: <Wallet size={18} /> },
+    { id: "swap", label: "Swap", icon: <ArrowLeftRight size={18} /> },
+    { id: "send", label: "Send", icon: <Send size={18} /> },
+    { id: "bridge", label: "Bridge", icon: <Globe size={18} /> },
+    { id: "explorer", label: "Explorer", icon: <FileSearch size={18} /> },
+  ];
+
+  const separator = 2;
+
+  const handleHover = (id: string | null) => {
+    if (hoveredId !== null && id !== null) {
+      const prevIndex = items.findIndex((item) => item.id === hoveredId);
+      const nextIndex = items.findIndex((item) => item.id === id);
+      setDirection(nextIndex > prevIndex ? 1 : -1);
+    }
+    setHoveredId(id);
+  };
+
+  const hoveredItem = items.find((item) => item.id === hoveredId);
+  const hoveredIndex = items.findIndex((item) => item.id === hoveredId);
+
+  const ITEM_SIZE = 44;
+  const GAP = 8;
+  const PADDING = 16;
+  const SEPARATOR_WIDTH = 13;
+
+  const getItemX = (index: number) => {
+    let x = PADDING + index * (ITEM_SIZE + GAP);
+    if (index > separator) x += SEPARATOR_WIDTH;
+    return x;
+  };
+
+  const bgX = hoveredItem ? getItemX(hoveredIndex) : 0;
+  const tooltipX = hoveredItem ? getItemX(hoveredIndex) + ITEM_SIZE / 2 : 0;
+
+  return (
+    <div
+      className="relative flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-700 dark:bg-zinc-800"
+      onMouseLeave={() => setHoveredId(null)}
+    >
+      <AnimatePresence>
+        {hoveredId && (
+          <motion.div
+            className="absolute top-1/2 left-0 -translate-y-1/2 rounded-xl bg-zinc-100 dark:bg-zinc-700"
+            style={{ width: ITEM_SIZE, height: ITEM_SIZE }}
+            initial={{ opacity: 0, x: bgX, scale: 0.95 }}
+            animate={{ opacity: 1, x: bgX, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          />
+        )}
+      </AnimatePresence>
+
+      {items.map((item, index) => (
+        <React.Fragment key={item.id}>
+          {index === separator + 1 && (
+            <div className="mx-0.5 h-5 w-px bg-zinc-200 dark:bg-zinc-700" />
+          )}
+          <button
+            onClick={() => setActiveId(item.id)}
+            onMouseEnter={() => handleHover(item.id)}
+            className={`relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl transition-colors duration-200 active:scale-[0.95] ${
+              activeId === item.id
+                ? "text-zinc-900 dark:text-white"
+                : "text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-white"
+            }`}
+          >
+            <span className="relative z-10">{item.icon}</span>
+            {activeId === item.id && (
+              <motion.div
+                layoutId="detail-toolbar-dot"
+                className="absolute -bottom-0.5 h-1 w-1 rounded-full bg-zinc-900 dark:bg-white"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+          </button>
+        </React.Fragment>
+      ))}
+
+      <AnimatePresence>
+        {hoveredItem && (
+          <motion.div
+            key="detail-tooltip"
+            className="pointer-events-none absolute -top-10 left-0 z-50 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-800"
+            initial={{ opacity: 0, y: 6, scale: 0.95, x: tooltipX, translateX: "-50%" }}
+            animate={{ opacity: 1, y: 0, scale: 1, x: tooltipX, translateX: "-50%" }}
+            exit={{ opacity: 0, y: 6, scale: 0.95, transition: { duration: 0.12 } }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          >
+            <AnimatePresence mode="popLayout" initial={false} custom={direction}>
+              <motion.span
+                key={hoveredItem.id}
+                className="block text-[11px] font-medium text-zinc-900 dark:text-white"
+                custom={direction}
+                initial={{ opacity: 0, y: direction * 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: direction * -8 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
+                {hoveredItem.label}
+              </motion.span>
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+const LIVE_PREVIEWS: Record<string, React.ReactNode> = {
+  "dapp-toolbar": <DAppToolbarLivePreview />,
+};
 
 function ComponentDetail({ component }: { component: ComponentMeta }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
@@ -191,9 +311,11 @@ function ComponentDetail({ component }: { component: ComponentMeta }) {
         <div className="mt-3">
           {tab === "preview" ? (
             <div className="flex min-h-[280px] items-center justify-center rounded-xl border border-zinc-200 bg-white p-10 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/50 px-8 py-6 dark:border-zinc-700 dark:bg-zinc-800/40">
-                <code className="font-mono text-sm text-zinc-600 dark:text-zinc-400">{component.usage}</code>
-              </div>
+              {LIVE_PREVIEWS[component.slug] ?? (
+                <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/50 px-8 py-6 dark:border-zinc-700 dark:bg-zinc-800/40">
+                  <code className="font-mono text-sm text-zinc-600 dark:text-zinc-400">{component.usage}</code>
+                </div>
+              )}
             </div>
           ) : (
             <CodeBlock code={component.code} />
@@ -208,17 +330,10 @@ function ComponentDetail({ component }: { component: ComponentMeta }) {
         </div>
       </div>
 
-      <div className="mt-14">
+      <div className="mt-14 pb-16">
         <SectionHeading>Props</SectionHeading>
         <div className="mt-4">
           <PropsTable component={component} />
-        </div>
-      </div>
-
-      <div className="mt-14 pb-16">
-        <SectionHeading>Usage</SectionHeading>
-        <div className="mt-4">
-          <CodeBlock code={component.code} />
         </div>
       </div>
     </div>
