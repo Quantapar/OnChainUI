@@ -303,12 +303,12 @@ export function ComponentsPage() {
               <Link to="/components" className="cursor-pointer text-[13px] font-medium text-zinc-900 dark:text-zinc-100">
                 Components
               </Link>
-              <a href="#" className="cursor-pointer text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+              <Link to="/docs" className="cursor-pointer text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
                 Docs
-              </a>
-              <a href="#" className="cursor-pointer text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
+              </Link>
+              <Link to="/templates" className="cursor-pointer text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
                 Templates
-              </a>
+              </Link>
             </div>
           </div>
 

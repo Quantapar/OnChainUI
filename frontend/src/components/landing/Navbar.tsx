@@ -1,5 +1,6 @@
 import { ExternalLink, Menu, X } from "lucide-react";
 import { forwardRef, useState } from "react";
+import { Link } from "react-router";
 import { ThemeToggle } from "../ThemeToggle";
 
 function GitHubIcon({ className }: { className?: string }) {
@@ -16,9 +17,9 @@ function GitHubIcon({ className }: { className?: string }) {
 }
 
 const NAV_LINKS = [
-  { label: "Components", href: "#components" },
-  { label: "Docs", href: "#docs" },
-  { label: "Templates", href: "#templates" },
+  { label: "Components", href: "/components" },
+  { label: "Docs", href: "/docs" },
+  { label: "Templates", href: "/templates" },
 ];
 
 export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
@@ -36,13 +37,13 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
 
         <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
+              to={link.href}
               className="cursor-pointer text-[13px] font-medium uppercase tracking-wide text-zinc-500 transition-[color] duration-150 ease-out hover:text-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 rounded-sm dark:text-zinc-400 dark:hover:text-zinc-100 dark:focus-visible:ring-zinc-100"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -60,7 +61,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
             <span className="sr-only">(opens in new tab)</span>
           </a>
           <a
-            href="#get-started"
+            href="/docs"
             className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2 text-[14px] font-medium text-white transition-transform duration-150 ease-out hover:bg-zinc-800 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
           >
             Get Started
@@ -92,14 +93,14 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
         >
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
+                to={link.href}
                 onClick={() => setMobileOpen(false)}
                 className="cursor-pointer rounded-lg px-3 py-2.5 text-[15px] text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-zinc-100"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <div className="mt-4 flex flex-col gap-3">
               <a
@@ -114,7 +115,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
                 <span className="sr-only">(opens in new tab)</span>
               </a>
               <a
-                href="#get-started"
+                href="/docs"
                 className="cursor-pointer rounded-full bg-zinc-900 px-5 py-2.5 text-center text-[14px] font-medium text-white transition-transform duration-150 ease-out active:scale-[0.97] dark:bg-zinc-100 dark:text-zinc-900"
               >
                 Get Started

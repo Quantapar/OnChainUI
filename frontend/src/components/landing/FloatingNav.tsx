@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
 
 const NAV_LINKS = [
-  { label: "Docs", href: "#docs" },
-  { label: "Templates", href: "#templates" },
-  { label: "Components", href: "#components" },
+  { label: "Docs", href: "/docs" },
+  { label: "Templates", href: "/templates" },
+  { label: "Components", href: "/components" },
 ];
 
 export function FloatingNav({ navbarRef }: { navbarRef: React.RefObject<HTMLElement | null> }) {
@@ -40,9 +41,9 @@ export function FloatingNav({ navbarRef }: { navbarRef: React.RefObject<HTMLElem
       </a>
       <div className="flex flex-col gap-1">
         {NAV_LINKS.map((link, i) => (
-          <a
+          <Link
             key={link.label}
-            href={link.href}
+            to={link.href}
             className="cursor-pointer py-1.5 text-[13px] font-semibold text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
             style={{
               transitionDuration: "150ms",
@@ -54,7 +55,7 @@ export function FloatingNav({ navbarRef }: { navbarRef: React.RefObject<HTMLElem
             }}
           >
             {link.label}
-          </a>
+          </Link>
         ))}
       </div>
     </nav>

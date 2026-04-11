@@ -102,7 +102,7 @@ export function Hero() {
         {...fadeUp(0.4)}
       >
         <a
-          href="#get-started"
+          href="/docs"
           className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-[transform] duration-150 ease-out active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:bg-zinc-100 dark:text-zinc-900 dark:focus-visible:ring-zinc-100"
         >
           Get Started
