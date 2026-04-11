@@ -2,11 +2,11 @@
   <img src="frontend/public/logo.svg" alt="OnChainUI" width="72" height="72" />
 
   <h1>OnChainUI</h1>
-</div>
 
-Beautiful React components for onchain apps.  
-Production-ready pieces for wallets, tokens, chains, and transactions.  
-Copy, paste, and ship.
+  <p>A web3 component library for React.<br />
+  Production-ready UI pieces for wallets, tokens, chains, and transactions.<br />
+  Copy, paste, and ship.</p>
+</div>
 
 ## Get started
 
