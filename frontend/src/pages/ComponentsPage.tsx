@@ -153,9 +153,9 @@ function PropsTable({ component }: { component: ComponentMeta }) {
               className={`transition-colors hover:bg-zinc-50/50 dark:hover:bg-zinc-900/40 ${i < component.props.length - 1 ? "border-b border-zinc-100 dark:border-[#1e1e22]" : ""}`}
             >
               <td className="whitespace-nowrap px-5 py-3">
-                <code className="rounded-md bg-zinc-100 px-1.5 py-0.5 font-mono text-xs font-medium text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200">
+                <span className="font-mono text-xs font-medium text-zinc-800 dark:text-zinc-200">
                   {prop.name}
-                </code>
+                </span>
               </td>
               <td className="whitespace-nowrap px-5 py-3 font-mono text-xs text-zinc-500 dark:text-zinc-400">
                 {prop.type}
@@ -300,6 +300,84 @@ const LIVE_PREVIEWS: Record<string, React.ReactNode> = {
   "dapp-toolbar": <DAppToolbarLivePreview />,
 };
 
+const INSTALL_COMMANDS = [
+  { id: "npm", command: (name: string) => `npx onchain-ui add ${name}` },
+  { id: "pnpm", command: (name: string) => `pnpm dlx onchain-ui add ${name}` },
+  { id: "yarn", command: (name: string) => `npx onchain-ui add ${name}` },
+  { id: "bun", command: (name: string) => `bunx onchain-ui add ${name}` },
+] as const;
+
+function InstallationSection({ component }: { component: ComponentMeta }) {
+  const [mode, setMode] = useState<"cli" | "manual">("cli");
+  const [pm, setPm] = useState<string>("npm");
+
+  const activeCommand = INSTALL_COMMANDS.find((c) => c.id === pm) ?? INSTALL_COMMANDS[0];
+
+  return (
+    <div className="mt-14">
+      <SectionHeading>Installation</SectionHeading>
+
+      <div className="mt-4 inline-flex items-center gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-900">
+        {(["cli", "manual"] as const).map((m) => (
+          <button
+            key={m}
+            onClick={() => setMode(m)}
+            className={`relative cursor-pointer rounded-md px-4 py-1.5 text-[13px] font-medium transition-colors duration-150 ${
+              mode === m
+                ? "text-zinc-900 dark:text-zinc-100"
+                : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+            }`}
+          >
+            {mode === m && (
+              <motion.span
+                layoutId="install-tab-indicator"
+                className="absolute inset-0 rounded-md bg-white shadow-sm dark:bg-zinc-800"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10">{m === "cli" ? "CLI" : "Manual"}</span>
+          </button>
+        ))}
+      </div>
+
+      {mode === "cli" ? (
+        <div className="mt-4">
+          <div className="mb-3 inline-flex items-center gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-900">
+            {INSTALL_COMMANDS.map((c) => (
+              <button
+                key={c.id}
+                onClick={() => setPm(c.id)}
+                className={`relative cursor-pointer rounded-md px-4 py-1.5 text-[13px] font-medium transition-colors duration-150 ${
+                  pm === c.id
+                    ? "text-zinc-900 dark:text-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+                }`}
+              >
+                {pm === c.id && (
+                  <motion.span
+                    layoutId="install-pm-indicator"
+                    className="absolute inset-0 rounded-md bg-white shadow-sm dark:bg-zinc-800"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{c.id}</span>
+              </button>
+            ))}
+          </div>
+          <CodeBlock code={activeCommand.command(component.slug)} compact />
+        </div>
+      ) : (
+        <div className="mt-4">
+          <p className="mb-3 text-[13px] text-zinc-500 dark:text-zinc-400">
+            Drop this into your project. It's all yours.
+          </p>
+          <CodeBlock code={component.source} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ComponentDetail({ component }: { component: ComponentMeta }) {
   const [tab, setTab] = useState<"preview" | "code">("preview");
 
@@ -365,12 +443,7 @@ function ComponentDetail({ component }: { component: ComponentMeta }) {
         </div>
       </div>
 
-      <div className="mt-14">
-        <SectionHeading>Installation</SectionHeading>
-        <div className="mt-4">
-          <CodeBlock code="npm install onchain-ui" compact />
-        </div>
-      </div>
+      <InstallationSection component={component} />
 
       <div className="mt-14 pb-16">
         <SectionHeading>Props</SectionHeading>

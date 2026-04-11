@@ -5,6 +5,7 @@ export interface ComponentMeta {
   category: string;
   props: PropMeta[];
   code: string;
+  source: string;
   usage: string;
 }
 
@@ -50,6 +51,18 @@ export function App() {
     />
   )
 }`,
+    source: `import { ConnectWallet } from 'onchain-ui'
+
+export function App() {
+  return (
+    <ConnectWallet
+      providers={['metamask', 'walletconnect', 'coinbase']}
+      theme="light"
+      size="md"
+      onConnect={(address) => console.log('Connected:', address)}
+    />
+  )
+}`,
     usage: `<ConnectWallet />`,
   },
   {
@@ -66,6 +79,18 @@ export function App() {
       { name: "truncate", type: "number", default: "4", description: "Characters to show at start/end" },
     ],
     code: `import { AddressDisplay } from 'onchain-ui'
+
+export function App() {
+  return (
+    <AddressDisplay
+      address="0x1a2b3c4d5e6f7890abcdef1234567890abcd9f3e"
+      ens
+      avatar
+      copyable
+    />
+  )
+}`,
+    source: `import { AddressDisplay } from 'onchain-ui'
 
 export function App() {
   return (
@@ -103,6 +128,18 @@ export function App() {
     />
   )
 }`,
+    source: `import { TokenBalance } from 'onchain-ui'
+
+export function App() {
+  return (
+    <TokenBalance
+      token="ETH"
+      address="0x1a2b...9f3e"
+      showUsd
+      refreshInterval={15000}
+    />
+  )
+}`,
     usage: `<TokenBalance token="ETH" address="0x..." />`,
   },
   {
@@ -118,6 +155,17 @@ export function App() {
       { name: "compact", type: "boolean", default: "false", description: "Show icon-only compact mode" },
     ],
     code: `import { ChainSelector } from 'onchain-ui'
+
+export function App() {
+  return (
+    <ChainSelector
+      chains={[ethereum, polygon, base, arbitrum]}
+      value={1}
+      onChange={(chainId) => switchChain(chainId)}
+    />
+  )
+}`,
+    source: `import { ChainSelector } from 'onchain-ui'
 
 export function App() {
   return (
@@ -154,6 +202,18 @@ export function App() {
     />
   )
 }`,
+    source: `import { TransactionFeed } from 'onchain-ui'
+
+export function App() {
+  return (
+    <TransactionFeed
+      address="0x1a2b...9f3e"
+      limit={20}
+      filter="all"
+      onSelect={(tx) => openExplorer(tx.hash)}
+    />
+  )
+}`,
     usage: `<TransactionFeed address="0x..." />`,
   },
   {
@@ -179,6 +239,17 @@ export function App() {
     />
   )
 }`,
+    source: `import { NetworkStatus } from 'onchain-ui'
+
+export function App() {
+  return (
+    <NetworkStatus
+      chainId={1}
+      showGas
+      showBlock
+    />
+  )
+}`,
     usage: `<NetworkStatus chainId={1} />`,
   },
   {
@@ -192,27 +263,31 @@ export function App() {
       { name: "activeId", type: "string", default: "—", description: "ID of the currently active item (shows dot indicator)" },
       { name: "separator", type: "number", default: "—", description: "Index after which to insert a vertical separator" },
     ],
-    code: `import React, { useState } from "react"
+    code: `import { useState } from "react"
+import { DAppToolbar } from "@/components/dapp-toolbar"
+import { Wallet, ArrowLeftRight, Send, Globe, FileSearch } from "lucide-react"
+
+export default function DAppToolbarDemo() {
+  const [active, setActive] = useState("wallet")
+
+  const items = [
+    { id: "wallet", label: "Wallet", icon: <Wallet size={18} />, onClick: () => setActive("wallet") },
+    { id: "swap", label: "Swap", icon: <ArrowLeftRight size={18} />, onClick: () => setActive("swap") },
+    { id: "send", label: "Send", icon: <Send size={18} />, onClick: () => setActive("send") },
+    { id: "bridge", label: "Bridge", icon: <Globe size={18} />, onClick: () => setActive("bridge") },
+    { id: "explorer", label: "Explorer", icon: <FileSearch size={18} />, onClick: () => setActive("explorer") },
+  ]
+
+  return <DAppToolbar items={items} activeId={active} separator={2} />
+}`,
+    source: `import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
-interface ToolbarItem {
-  id: string
-  label: string
-  icon: React.ReactNode
-  onClick?: (e: React.MouseEvent) => void
-}
-
-interface DAppToolbarProps {
-  items: ToolbarItem[]
-  activeId?: string
-  separator?: number
-}
-
-export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
+export const DAppToolbar = ({ items = [], activeId, separator, onSelect }) => {
+  const [hoveredId, setHoveredId] = useState(null)
   const [direction, setDirection] = useState(0)
 
-  const handleHover = (id: string | null) => {
+  const handleHover = (id) => {
     if (hoveredId !== null && id !== null) {
       const prevIndex = items.findIndex((item) => item.id === hoveredId)
       const nextIndex = items.findIndex((item) => item.id === id)
@@ -229,11 +304,9 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
   const PADDING = 16
   const SEPARATOR_WIDTH = 13
 
-  const getItemX = (index: number) => {
+  const getItemX = (index) => {
     let x = PADDING + index * (ITEM_SIZE + GAP)
-    if (separator !== undefined && index > separator) {
-      x += SEPARATOR_WIDTH
-    }
+    if (separator !== undefined && index > separator) x += SEPARATOR_WIDTH
     return x
   }
 
@@ -242,16 +315,13 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
 
   return (
     <div
-      className="relative flex items-center gap-2 rounded-full border
-        border-zinc-200 bg-white px-4 py-2 shadow-sm
-        dark:border-zinc-800 dark:bg-[#09090B]"
+      className="relative flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-800 dark:bg-[#09090B]"
       onMouseLeave={() => setHoveredId(null)}
     >
       <AnimatePresence>
         {hoveredId && (
           <motion.div
-            className="absolute top-1/2 left-0 -translate-y-1/2
-              rounded-xl bg-zinc-100 dark:bg-zinc-800"
+            className="absolute top-1/2 left-0 -translate-y-1/2 rounded-xl bg-zinc-100 dark:bg-zinc-800"
             style={{ width: ITEM_SIZE, height: ITEM_SIZE }}
             initial={{ opacity: 0, x: bgX, scale: 0.95 }}
             animate={{ opacity: 1, x: bgX, scale: 1 }}
@@ -267,23 +337,19 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
             <div className="mx-0.5 h-5 w-px bg-zinc-200 dark:bg-zinc-800" />
           )}
           <button
-            onClick={item.onClick}
+            onClick={() => onSelect?.(item.id)}
             onMouseEnter={() => handleHover(item.id)}
-            className={\`relative flex h-11 w-11 cursor-pointer items-center
-              justify-center rounded-xl transition-colors duration-200
-              active:scale-[0.95] \${
-                activeId === item.id
-                  ? "text-zinc-900 dark:text-white"
-                  : "text-zinc-400 hover:text-zinc-700
-                     dark:text-zinc-500 dark:hover:text-white"
-              }\`}
+            className={\`relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl transition-colors duration-200 active:scale-[0.95] \${
+              activeId === item.id
+                ? "text-zinc-900 dark:text-white"
+                : "text-zinc-400 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-white"
+            }\`}
           >
             <span className="relative z-10">{item.icon}</span>
             {activeId === item.id && (
               <motion.div
                 layoutId="toolbar-active-dot"
-                className="absolute -bottom-0.5 h-1 w-1
-                  rounded-full bg-zinc-900 dark:bg-white"
+                className="absolute -bottom-0.5 h-1 w-1 rounded-full bg-zinc-900 dark:bg-white"
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
               />
             )}
@@ -294,30 +360,17 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
       <AnimatePresence>
         {hoveredItem && (
           <motion.div
-            key="toolbar-tooltip"
-            className="pointer-events-none absolute -top-10 left-0 z-50
-              whitespace-nowrap rounded-lg border border-zinc-200
-              bg-white px-2.5 py-1 shadow-sm
-              dark:border-zinc-800 dark:bg-[#09090B]"
-            initial={{
-              opacity: 0, y: 6, scale: 0.95,
-              x: tooltipX, translateX: "-50%",
-            }}
-            animate={{
-              opacity: 1, y: 0, scale: 1,
-              x: tooltipX, translateX: "-50%",
-            }}
-            exit={{
-              opacity: 0, y: 6, scale: 0.95,
-              transition: { duration: 0.12 },
-            }}
+            key="tooltip"
+            className="pointer-events-none absolute -top-10 left-0 z-50 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1 shadow-sm dark:border-zinc-800 dark:bg-[#09090B]"
+            initial={{ opacity: 0, y: 6, scale: 0.95, x: tooltipX, translateX: "-50%" }}
+            animate={{ opacity: 1, y: 0, scale: 1, x: tooltipX, translateX: "-50%" }}
+            exit={{ opacity: 0, y: 6, scale: 0.95, transition: { duration: 0.12 } }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
             <AnimatePresence mode="popLayout" initial={false} custom={direction}>
               <motion.span
                 key={hoveredItem.id}
-                className="block text-[11px] font-medium
-                  text-zinc-900 dark:text-white"
+                className="block text-[11px] font-medium text-zinc-900 dark:text-white"
                 custom={direction}
                 initial={{ opacity: 0, y: direction * 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -333,16 +386,6 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
     </div>
   )
 }`,
-    usage: `import { Wallet, ArrowLeftRight, Send, Globe, FileSearch } from 'lucide-react'
-
-const items = [
-  { id: 'wallet', label: 'Wallet', icon: <Wallet size={18} /> },
-  { id: 'swap', label: 'Swap', icon: <ArrowLeftRight size={18} /> },
-  { id: 'send', label: 'Send', icon: <Send size={18} /> },
-  { id: 'bridge', label: 'Bridge', icon: <Globe size={18} /> },
-  { id: 'explorer', label: 'Explorer', icon: <FileSearch size={18} /> },
-]
-
-<DAppToolbar items={items} activeId="wallet" separator={2} />`,
+    usage: `<DAppToolbar items={items} activeId="wallet" separator={2} />`,
   },
 ];
