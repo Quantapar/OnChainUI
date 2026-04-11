@@ -1,4 +1,8 @@
-# OnchainUI
+<div align="center">
+  <img src="frontend/public/logo.svg" alt="OnChainUI" width="72" height="72" />
+
+  <h1>OnChainUI</h1>
+</div>
 
 Beautiful React components for onchain apps.  
 Production-ready pieces for wallets, tokens, chains, and transactions.  
