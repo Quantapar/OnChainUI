@@ -50,7 +50,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
           <a
-            href="https://github.com"
+            href="https://github.com/Quantapar/OnChainUI"
             target="_blank"
             rel="noopener noreferrer"
             className="flex cursor-pointer items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 text-[14px] text-zinc-700 transition-[color,background-color,border-color] duration-150 ease-out hover:bg-zinc-50 hover:border-zinc-300 hover:text-zinc-900 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:border-zinc-700 dark:hover:text-zinc-100"
@@ -104,7 +104,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
             ))}
             <div className="mt-4 flex flex-col gap-3">
               <a
-                href="https://github.com"
+                href="https://github.com/Quantapar/OnChainUI"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex cursor-pointer items-center justify-center gap-2 rounded-full border border-zinc-200 px-4 py-2.5 text-[14px] text-zinc-700 dark:border-zinc-800 dark:text-zinc-300"
