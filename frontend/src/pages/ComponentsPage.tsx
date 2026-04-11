@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { createHighlighter, type Highlighter } from "shiki";
 import { Link, useParams, useNavigate, Navigate } from "react-router";
 import {
   Check, Copy, ChevronRight, Menu, X,
@@ -45,8 +46,36 @@ function Sidebar({ current }: { current: string }) {
   );
 }
 
+let highlighterPromise: Promise<Highlighter> | null = null;
+
+function getHighlighter() {
+  if (!highlighterPromise) {
+    highlighterPromise = createHighlighter({
+      themes: ["github-light", "github-dark"],
+      langs: ["tsx", "bash"],
+    });
+  }
+  return highlighterPromise;
+}
+
+function useHighlightedCode(code: string, lang: "tsx" | "bash") {
+  const [lightHtml, setLightHtml] = useState<string | null>(null);
+  const [darkHtml, setDarkHtml] = useState<string | null>(null);
+
+  useEffect(() => {
+    getHighlighter().then((highlighter) => {
+      setLightHtml(highlighter.codeToHtml(code, { lang, theme: "github-light" }));
+      setDarkHtml(highlighter.codeToHtml(code, { lang, theme: "github-dark" }));
+    });
+  }, [code, lang]);
+
+  return { lightHtml, darkHtml };
+}
+
 function CodeBlock({ code, compact }: { code: string; compact?: boolean }) {
   const [copied, setCopied] = useState(false);
+  const lang = compact ? "bash" : "tsx";
+  const { lightHtml, darkHtml } = useHighlightedCode(code, lang);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
@@ -56,9 +85,22 @@ function CodeBlock({ code, compact }: { code: string; compact?: boolean }) {
 
   return (
     <div className={`group flex gap-2 rounded-xl border border-zinc-200 bg-zinc-50 dark:border-[#1e1e22] dark:bg-[#111113] ${compact ? "items-center px-4 py-3" : "items-start p-5"}`}>
-      <pre className={`min-w-0 flex-1 overflow-x-auto font-mono leading-relaxed text-zinc-700 dark:text-zinc-300 ${compact ? "text-xs" : "max-h-[320px] overflow-y-auto text-[13px]"}`}>
-        <code>{code}</code>
-      </pre>
+      {lightHtml && darkHtml ? (
+        <>
+          <div
+            className={`block min-w-0 flex-1 overflow-x-auto font-mono leading-relaxed dark:hidden [&_pre]:!bg-transparent [&_code]:!bg-transparent ${compact ? "text-xs" : "max-h-[320px] overflow-y-auto text-[13px]"}`}
+            dangerouslySetInnerHTML={{ __html: lightHtml }}
+          />
+          <div
+            className={`hidden min-w-0 flex-1 overflow-x-auto font-mono leading-relaxed dark:block [&_pre]:!bg-transparent [&_code]:!bg-transparent ${compact ? "text-xs" : "max-h-[320px] overflow-y-auto text-[13px]"}`}
+            dangerouslySetInnerHTML={{ __html: darkHtml }}
+          />
+        </>
+      ) : (
+        <pre className={`min-w-0 flex-1 overflow-x-auto font-mono leading-relaxed text-zinc-700 dark:text-zinc-300 ${compact ? "text-xs" : "max-h-[320px] overflow-y-auto text-[13px]"}`}>
+          <code>{code}</code>
+        </pre>
+      )}
       <button
         onClick={handleCopy}
         className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border border-zinc-300 text-zinc-400 transition-[border-color,color] duration-150 ease-out hover:border-zinc-400 hover:text-zinc-600 dark:border-zinc-700 dark:hover:border-zinc-600 dark:hover:text-zinc-200"
@@ -182,13 +224,13 @@ function DAppToolbarLivePreview() {
 
   return (
     <div
-      className="relative flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-700 dark:bg-zinc-800"
+      className="relative flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-zinc-800 dark:bg-[#09090B]"
       onMouseLeave={() => setHoveredId(null)}
     >
       <AnimatePresence>
         {hoveredId && (
           <motion.div
-            className="absolute top-1/2 left-0 -translate-y-1/2 rounded-xl bg-zinc-100 dark:bg-zinc-700"
+            className="absolute top-1/2 left-0 -translate-y-1/2 rounded-xl bg-zinc-100 dark:bg-zinc-800"
             style={{ width: ITEM_SIZE, height: ITEM_SIZE }}
             initial={{ opacity: 0, x: bgX, scale: 0.95 }}
             animate={{ opacity: 1, x: bgX, scale: 1 }}
@@ -228,7 +270,7 @@ function DAppToolbarLivePreview() {
         {hoveredItem && (
           <motion.div
             key="detail-tooltip"
-            className="pointer-events-none absolute -top-10 left-0 z-50 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-800"
+            className="pointer-events-none absolute -top-10 left-0 z-50 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1 shadow-sm dark:border-zinc-800 dark:bg-[#09090B]"
             initial={{ opacity: 0, y: 6, scale: 0.95, x: tooltipX, translateX: "-50%" }}
             animate={{ opacity: 1, y: 0, scale: 1, x: tooltipX, translateX: "-50%" }}
             exit={{ opacity: 0, y: 6, scale: 0.95, transition: { duration: 0.12 } }}
@@ -285,32 +327,32 @@ function ComponentDetail({ component }: { component: ComponentMeta }) {
       <div className="mt-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-900">
-            <button
-              onClick={() => setTab("preview")}
-              className={`cursor-pointer rounded-md px-4 py-1.5 text-[13px] font-medium transition-all duration-150 ${
-                tab === "preview"
-                  ? "bg-white text-zinc-900 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
-                  : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
-              }`}
-            >
-              Preview
-            </button>
-            <button
-              onClick={() => setTab("code")}
-              className={`cursor-pointer rounded-md px-4 py-1.5 text-[13px] font-medium transition-all duration-150 ${
-                tab === "code"
-                  ? "bg-white text-zinc-900 shadow-sm dark:bg-zinc-800 dark:text-zinc-100"
-                  : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
-              }`}
-            >
-              Code
-            </button>
+            {(["preview", "code"] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`relative cursor-pointer rounded-md px-4 py-1.5 text-[13px] font-medium transition-colors duration-150 ${
+                  tab === t
+                    ? "text-zinc-900 dark:text-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                }`}
+              >
+                {tab === t && (
+                  <motion.span
+                    layoutId="detail-tab-indicator"
+                    className="absolute inset-0 rounded-md bg-white shadow-sm dark:bg-zinc-800"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{t === "preview" ? "Preview" : "Code"}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         <div className="mt-3">
           {tab === "preview" ? (
-            <div className="flex min-h-[280px] items-center justify-center rounded-xl border border-zinc-200 bg-white p-10 dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="flex min-h-[280px] items-center justify-center rounded-xl border border-zinc-200 bg-white p-10 dark:border-[#1e1e22] dark:bg-[#111113]">
               {LIVE_PREVIEWS[component.slug] ?? (
                 <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/50 px-8 py-6 dark:border-zinc-700 dark:bg-zinc-800/40">
                   <code className="font-mono text-sm text-zinc-600 dark:text-zinc-400">{component.usage}</code>
@@ -407,13 +449,14 @@ export function ComponentsPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/95 backdrop-blur-md dark:border-zinc-900 dark:bg-zinc-950/95">
-        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
-          <div className="flex items-center gap-6">
+        <div className="mx-auto flex h-14 max-w-[1400px] items-center">
+          <div className="flex w-64 shrink-0 items-center border-r border-zinc-100 px-6 dark:border-zinc-900">
             <Link to="/" className="flex cursor-pointer items-center gap-2">
               <img src="/logo.svg" alt="OnChainUI" width={24} height={24} className="h-6 w-6 dark:invert" />
               <span className="text-[15px] font-semibold text-zinc-900 dark:text-zinc-100">OnChainUI</span>
             </Link>
-            <span className="hidden h-5 w-px bg-zinc-200 md:block dark:bg-zinc-800" />
+          </div>
+          <div className="flex flex-1 items-center justify-between px-6">
             <div className="hidden items-center gap-5 md:flex">
               <Link to="/components" className="cursor-pointer text-[13px] font-medium text-zinc-900 dark:text-zinc-100">
                 Components
@@ -425,18 +468,17 @@ export function ComponentsPage() {
                 Templates
               </Link>
             </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="cursor-pointer rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 lg:hidden dark:text-zinc-400 dark:hover:bg-zinc-900"
-              aria-label="Toggle sidebar"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="cursor-pointer rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 lg:hidden dark:text-zinc-400 dark:hover:bg-zinc-900"
+                aria-label="Toggle sidebar"
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </header>

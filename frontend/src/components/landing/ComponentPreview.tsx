@@ -306,7 +306,7 @@ function DAppToolbarPreview() {
 
   return (
     <div
-      className="relative flex items-center gap-1 rounded-full border border-zinc-200 bg-white px-2.5 py-1.5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
+      className="relative flex items-center gap-1 rounded-full border border-zinc-200 bg-white px-2.5 py-1.5 shadow-sm dark:border-zinc-800 dark:bg-[#09090B]"
       onMouseLeave={() => setHoveredId(null)}
     >
       <AnimatePresence>
@@ -355,7 +355,7 @@ function DAppToolbarPreview() {
         {hoveredItem && (
           <motion.div
             key="toolbar-tooltip"
-            className="pointer-events-none absolute -top-10 left-0 z-50 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1 shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
+            className="pointer-events-none absolute -top-10 left-0 z-50 whitespace-nowrap rounded-lg border border-zinc-200 bg-white px-2.5 py-1 shadow-sm dark:border-zinc-800 dark:bg-[#09090B]"
             initial={{ opacity: 0, y: 6, scale: 0.95, x: tooltipX, translateX: "-50%" }}
             animate={{ opacity: 1, y: 0, scale: 1, x: tooltipX, translateX: "-50%" }}
             exit={{ opacity: 0, y: 6, scale: 0.95, transition: { duration: 0.12 } }}

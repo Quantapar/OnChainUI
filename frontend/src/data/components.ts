@@ -244,7 +244,7 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
     <div
       className="relative flex items-center gap-2 rounded-full border
         border-zinc-200 bg-white px-4 py-2 shadow-sm
-        dark:border-zinc-700 dark:bg-zinc-900"
+        dark:border-zinc-800 dark:bg-[#09090B]"
       onMouseLeave={() => setHoveredId(null)}
     >
       <AnimatePresence>
@@ -264,7 +264,7 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
       {items.map((item, index) => (
         <React.Fragment key={item.id}>
           {separator !== undefined && index === separator + 1 && (
-            <div className="mx-0.5 h-5 w-px bg-zinc-200 dark:bg-zinc-700" />
+            <div className="mx-0.5 h-5 w-px bg-zinc-200 dark:bg-zinc-800" />
           )}
           <button
             onClick={item.onClick}
@@ -298,7 +298,7 @@ export function DAppToolbar({ items, activeId, separator }: DAppToolbarProps) {
             className="pointer-events-none absolute -top-10 left-0 z-50
               whitespace-nowrap rounded-lg border border-zinc-200
               bg-white px-2.5 py-1 shadow-sm
-              dark:border-zinc-700 dark:bg-zinc-900"
+              dark:border-zinc-800 dark:bg-[#09090B]"
             initial={{
               opacity: 0, y: 6, scale: 0.95,
               x: tooltipX, translateX: "-50%",
