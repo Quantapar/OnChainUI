@@ -8,8 +8,6 @@ import {
   ArrowDownLeft,
   ArrowLeftRight,
   ChevronDown,
-  Copy,
-  Check,
   FileSearch,
   Globe,
   Send,
@@ -25,10 +23,10 @@ import {
 } from "@web3icons/react";
 
 const BENTO_LAYOUT = [
-  { slug: "connect-wallet", colSpan: "lg:col-span-2", rowSpan: "lg:row-span-2" },
+  { slug: "wallet-card", colSpan: "lg:col-span-2", rowSpan: "lg:row-span-2" },
   { slug: "token-balance", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "chain-selector", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
-  { slug: "address-display", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
+  { slug: "connect-wallet", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "transaction-feed", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
   { slug: "dapp-toolbar", colSpan: "lg:col-span-1", rowSpan: "lg:row-span-1" },
 ];
@@ -160,54 +158,6 @@ function ChainSelectorPreview() {
           ))}
         </div>
       )}
-    </div>
-  );
-}
-
-function AddressDisplayPreview() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-
-  return (
-    <div className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900">
-      <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-amber-300 via-rose-400 to-indigo-500" />
-      <div className="min-w-0">
-        <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">vitalik.eth</p>
-        <p className="truncate font-mono text-xs text-zinc-500 dark:text-zinc-400">0x1a2b…9f3e</p>
-      </div>
-      <button
-        onClick={handleCopy}
-        className="ml-auto flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          {copied ? (
-            <motion.span
-              key="check"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <Check className="h-3.5 w-3.5 text-brand" />
-            </motion.span>
-          ) : (
-            <motion.span
-              key="copy"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <Copy className="h-3.5 w-3.5" />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </button>
     </div>
   );
 }
@@ -381,14 +331,62 @@ function DAppToolbarPreview() {
   );
 }
 
+function WalletCardPreview() {
+  const [color, setColor] = useState("#3B82F6");
+  const colors = [
+    "#F43F5E", "#EC4899", "#D946EF", "#A855F7", "#3B82F6",
+    "#06B6D4", "#10B981", "#EAB308", "#F97316",
+  ];
+
+  return (
+    <div className="flex w-full max-w-[260px] flex-col items-center gap-5">
+      <motion.div
+        className="flex aspect-[1.6] w-full flex-col justify-between rounded-2xl p-4 text-white shadow-xl"
+        animate={{ backgroundColor: color }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
+        <p className="font-mono text-[10px] opacity-80">0x1a2b…9f3e</p>
+        <div>
+          <p className="text-base font-semibold">vitalik.eth</p>
+          <p className="text-xs opacity-80">Ethereum Builder</p>
+        </div>
+      </motion.div>
+      <div className="flex gap-2.5">
+        {colors.map((c) => (
+          <button
+            key={c}
+            onClick={(e) => {
+              e.preventDefault();
+              setColor(c);
+            }}
+            className="relative flex h-5 w-5 cursor-pointer items-center justify-center"
+          >
+            <AnimatePresence>
+              {color === c && (
+                <motion.span
+                  layoutId="bento-wallet-card-ring"
+                  className="absolute -inset-1 rounded-full border-2"
+                  style={{ borderColor: c }}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+                />
+              )}
+            </AnimatePresence>
+            <span className="h-full w-full rounded-full" style={{ backgroundColor: c }} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const PREVIEW_MAP: Record<string, React.ReactNode> = {
   "connect-wallet": <ConnectWalletPreview />,
   "token-balance": <TokenBalancePreview />,
   "chain-selector": <ChainSelectorPreview />,
-  "address-display": <AddressDisplayPreview />,
   "transaction-feed": <TransactionFeedPreview />,
   "network-status": <NetworkStatusPreview />,
   "dapp-toolbar": <DAppToolbarPreview />,
+  "wallet-card": <WalletCardPreview />,
 };
 
 export function ComponentPreview() {

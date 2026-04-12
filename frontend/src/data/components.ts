@@ -66,45 +66,6 @@ export function App() {
     usage: `<ConnectWallet />`,
   },
   {
-    slug: "address-display",
-    name: "AddressDisplay",
-    description:
-      "Displays a truncated wallet address with ENS resolution, avatar, and copy-to-clipboard functionality.",
-    category: "Display",
-    props: [
-      { name: "address", type: "string", default: "—", description: "The wallet address to display" },
-      { name: "ens", type: "boolean", default: "true", description: "Enable ENS name resolution" },
-      { name: "avatar", type: "boolean", default: "true", description: "Show a generated avatar" },
-      { name: "copyable", type: "boolean", default: "true", description: "Enable click-to-copy" },
-      { name: "truncate", type: "number", default: "4", description: "Characters to show at start/end" },
-    ],
-    code: `import { AddressDisplay } from 'onchain-ui'
-
-export function App() {
-  return (
-    <AddressDisplay
-      address="0x1a2b3c4d5e6f7890abcdef1234567890abcd9f3e"
-      ens
-      avatar
-      copyable
-    />
-  )
-}`,
-    source: `import { AddressDisplay } from 'onchain-ui'
-
-export function App() {
-  return (
-    <AddressDisplay
-      address="0x1a2b3c4d5e6f7890abcdef1234567890abcd9f3e"
-      ens
-      avatar
-      copyable
-    />
-  )
-}`,
-    usage: `<AddressDisplay address="0x1a2b...9f3e" />`,
-  },
-  {
     slug: "token-balance",
     name: "TokenBalance",
     description:
@@ -387,5 +348,156 @@ export const DAppToolbar = ({ items = [], activeId, separator, onSelect }) => {
   )
 }`,
     usage: `<DAppToolbar items={items} activeId="wallet" separator={2} />`,
+  },
+  {
+    slug: "wallet-card",
+    name: "WalletCard",
+    description:
+      "An editable wallet identity card. Customize nickname, role, and color. Copy the wallet address with one click. Perfect for profile pages and dApp dashboards.",
+    category: "Wallet",
+    props: [
+      { name: "address", type: "string", default: "—", description: "Wallet address shown on the card and used for copy" },
+      { name: "defaultNickname", type: "string", default: "'vitalik.eth'", description: "Initial display name (typically an ENS)" },
+      { name: "defaultRole", type: "string", default: "'Builder'", description: "Initial role or title" },
+      { name: "defaultColor", type: "string", default: "'#3B82F6'", description: "Initial card background color" },
+      { name: "colors", type: "string[]", default: "DEFAULT_COLORS", description: "Color palette for the picker" },
+      { name: "socialLinks", type: "SocialLink[]", default: "[]", description: "Array of icon + url pairs (X, Farcaster, GitHub)" },
+      { name: "onSave", type: "(data) => void", default: "—", description: "Callback fired with the edited identity on save" },
+    ],
+    code: `import { useState } from "react"
+import { WalletCard } from "@/components/wallet-card"
+
+export default function WalletCardDemo() {
+  return (
+    <WalletCard
+      address="0x1a2b3c4d5e6f7890abcdef1234567890abcd9f3e"
+      defaultNickname="vitalik.eth"
+      defaultRole="Ethereum Builder"
+      defaultColor="#3B82F6"
+      onSave={(data) => console.log("Saved:", data)}
+    />
+  )
+}`,
+    source: `import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+
+const DEFAULT_COLORS = [
+  "#F43F5E", "#EC4899", "#D946EF", "#A855F7", "#3B82F6",
+  "#06B6D4", "#10B981", "#EAB308", "#F97316",
+]
+
+const truncate = (addr) =>
+  addr ? \`\${addr.slice(0, 6)}…\${addr.slice(-4)}\` : ""
+
+export const WalletCard = ({
+  address = "0x1a2b3c4d5e6f7890abcdef1234567890abcd9f3e",
+  defaultNickname = "vitalik.eth",
+  defaultRole = "Builder",
+  defaultColor = "#3B82F6",
+  colors = DEFAULT_COLORS,
+  socialLinks = [],
+  onSave,
+}) => {
+  const [selectedColor, setSelectedColor] = useState(defaultColor)
+  const [nickname, setNickname] = useState(defaultNickname)
+  const [role, setRole] = useState(defaultRole)
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(address)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto">
+      <motion.div
+        className="w-full aspect-[1.6] rounded-3xl p-6 flex flex-col justify-between text-white shadow-xl overflow-hidden"
+        animate={{ backgroundColor: selectedColor }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
+        <div className="flex justify-between items-start">
+          <button
+            onClick={handleCopy}
+            className="flex items-center gap-2 text-xs font-mono hover:bg-white/20 px-3 py-1.5 rounded-full transition-colors"
+          >
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={copied ? "copied" : "address"}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+              >
+                {copied ? "Copied!" : truncate(address)}
+              </motion.span>
+            </AnimatePresence>
+          </button>
+          {socialLinks.length > 0 && (
+            <div className="flex gap-2">
+              {socialLinks.map((link, i) => (
+                <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+        <div>
+          <input
+            type="text"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            className="bg-transparent text-2xl font-semibold outline-none placeholder:text-white/50 w-full"
+            placeholder="vitalik.eth"
+          />
+          <input
+            type="text"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="bg-transparent text-white/80 font-medium outline-none placeholder:text-white/50 w-full mt-1"
+            placeholder="Role"
+          />
+        </div>
+      </motion.div>
+
+      <div className="flex gap-3 flex-wrap justify-center">
+        {colors.map((color) => (
+          <button
+            key={color}
+            onClick={() => setSelectedColor(color)}
+            className="relative w-8 h-8 rounded-full group flex items-center justify-center"
+          >
+            <AnimatePresence>
+              {selectedColor === color && (
+                <motion.div
+                  layoutId="wallet-card-color-ring"
+                  className="absolute -inset-1 rounded-full border-2"
+                  style={{ borderColor: color }}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+            </AnimatePresence>
+            <div
+              className="w-full h-full rounded-full transition-transform group-hover:scale-110"
+              style={{ backgroundColor: color }}
+            />
+          </button>
+        ))}
+      </div>
+
+      <motion.button
+        className="w-full py-3.5 rounded-2xl text-white font-medium text-lg cursor-pointer"
+        animate={{ backgroundColor: selectedColor }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={() => onSave?.({ nickname, role, address, color: selectedColor })}
+      >
+        Save Identity
+      </motion.button>
+    </div>
+  )
+}`,
+    usage: `<WalletCard address="0x..." defaultNickname="vitalik.eth" />`,
   },
 ];

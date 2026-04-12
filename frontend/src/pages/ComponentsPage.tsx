@@ -296,8 +296,116 @@ function DAppToolbarLivePreview() {
   );
 }
 
+function WalletCardLivePreview() {
+  const DEFAULT_COLORS = [
+    "#F43F5E", "#EC4899", "#D946EF", "#A855F7", "#3B82F6",
+    "#06B6D4", "#10B981", "#EAB308", "#F97316",
+  ];
+  const address = "0x1a2b3c4d5e6f7890abcdef1234567890abcd9f3e";
+  const [selectedColor, setSelectedColor] = useState("#3B82F6");
+  const [nickname, setNickname] = useState("vitalik.eth");
+  const [role, setRole] = useState("Ethereum Builder");
+  const [copied, setCopied] = useState(false);
+
+  const truncate = (addr: string) => `${addr.slice(0, 6)}…${addr.slice(-4)}`;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(address);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="mx-auto flex w-full max-w-md flex-col items-center gap-6">
+      <motion.div
+        className="flex aspect-[1.6] w-full flex-col justify-between overflow-hidden rounded-3xl p-6 text-white shadow-2xl"
+        animate={{ backgroundColor: selectedColor }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
+        <div className="flex items-start justify-between">
+          <button
+            onClick={handleCopy}
+            className="-mx-2 flex cursor-pointer items-center gap-2 rounded-full px-2 py-1 font-mono text-xs transition-colors hover:bg-white/20"
+          >
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={copied ? "copied" : "address"}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+              >
+                {copied ? "Copied!" : truncate(address)}
+              </motion.span>
+            </AnimatePresence>
+          </button>
+          <div className="flex items-center gap-3">
+            <a href="#" className="cursor-pointer transition-opacity hover:opacity-70" aria-label="X">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+            <a href="#" className="cursor-pointer transition-opacity hover:opacity-70" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" />
+              </svg>
+            </a>
+            <a href="#" className="cursor-pointer transition-opacity hover:opacity-70" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <input
+            type="text"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            className="w-full bg-transparent text-2xl font-semibold outline-none placeholder:text-white/50"
+            placeholder="vitalik.eth"
+          />
+          <input
+            type="text"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="mt-1 w-full bg-transparent text-sm font-medium text-white/80 outline-none placeholder:text-white/50"
+            placeholder="Role"
+          />
+        </div>
+      </motion.div>
+
+      <div className="flex items-center justify-center gap-3">
+        {DEFAULT_COLORS.map((color) => (
+          <button
+            key={color}
+            onClick={() => setSelectedColor(color)}
+            className="group relative flex h-5 w-5 cursor-pointer items-center justify-center"
+          >
+            <AnimatePresence>
+              {selectedColor === color && (
+                <motion.div
+                  layoutId="live-wallet-card-ring"
+                  className="absolute -inset-1 rounded-full border-2"
+                  style={{ borderColor: color }}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+            </AnimatePresence>
+            <div
+              className="h-full w-full rounded-full transition-transform group-hover:scale-110"
+              style={{ backgroundColor: color }}
+            />
+          </button>
+        ))}
+      </div>
+
+    </div>
+  );
+}
+
 const LIVE_PREVIEWS: Record<string, React.ReactNode> = {
   "dapp-toolbar": <DAppToolbarLivePreview />,
+  "wallet-card": <WalletCardLivePreview />,
 };
 
 const INSTALL_COMMANDS = [
