@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createHighlighter, type Highlighter } from "shiki";
 import { Link, useParams, useNavigate, Navigate } from "react-router";
