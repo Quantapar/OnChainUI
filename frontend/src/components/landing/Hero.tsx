@@ -69,7 +69,7 @@ export function Hero() {
   };
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-24 text-center md:py-36">
+    <section className="mx-auto max-w-6xl px-4 py-20 text-center sm:px-6 sm:py-24 md:py-36">
       <motion.div {...fadeUp(0.05)}>
         <span className="inline-block rounded-full border border-zinc-200 bg-zinc-50 px-4 py-1.5 text-xs font-medium text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
           Web3 Component Library
@@ -80,10 +80,10 @@ export function Hero() {
         className="mx-auto mt-6 max-w-3xl font-display tracking-tight"
         {...fadeUp(0.15)}
       >
-        <span className="block whitespace-nowrap text-5xl font-medium text-zinc-900 md:text-7xl dark:text-zinc-50">
+        <span className="block text-4xl font-medium text-zinc-900 sm:whitespace-nowrap sm:text-5xl md:text-7xl dark:text-zinc-50">
           Beautiful components
         </span>
-        <span className="mt-1 block whitespace-nowrap text-3xl font-normal text-zinc-500 md:mt-2 md:text-6xl dark:text-zinc-400">
+        <span className="mt-1 block text-2xl font-normal text-zinc-500 sm:whitespace-nowrap sm:text-3xl md:mt-2 md:text-6xl dark:text-zinc-400">
           <span className="italic text-brand">for</span>{" "}
           <span className="text-zinc-900 dark:text-zinc-50">onchain apps</span>
         </span>
@@ -98,7 +98,7 @@ export function Hero() {
       </motion.p>
 
       <motion.div
-        className="mt-10 flex items-center justify-center gap-4"
+        className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
         {...fadeUp(0.4)}
       >
         <a

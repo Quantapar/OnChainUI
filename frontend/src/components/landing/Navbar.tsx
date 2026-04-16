@@ -27,7 +27,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
 
   return (
     <nav ref={ref}>
-      <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="/" className="flex cursor-pointer items-center gap-1.5">
           <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7 dark:invert" />
           <span className="text-[15px] font-semibold text-zinc-900 dark:text-zinc-100">
@@ -87,7 +87,7 @@ export const Navbar = forwardRef<HTMLElement>(function Navbar(_props, ref) {
 
       {mobileOpen && (
         <div
-          className="px-8 pb-6 md:hidden"
+          className="px-4 pb-6 sm:px-8 md:hidden"
           role="dialog"
           aria-label="Mobile navigation"
         >

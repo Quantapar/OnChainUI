@@ -392,7 +392,7 @@ const PREVIEW_MAP: Record<string, React.ReactNode> = {
 export function ComponentPreview() {
   return (
     <section id="components" className="border-t border-zinc-100 dark:border-zinc-900">
-      <div className="mx-auto max-w-6xl px-6 py-12">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <ScrollReveal className="mx-auto w-full text-center">
           <h2 className="mx-auto text-4xl font-normal tracking-tight text-zinc-900 md:text-5xl dark:text-zinc-50">
             Component Preview
@@ -402,7 +402,7 @@ export function ComponentPreview() {
           </p>
         </ScrollReveal>
 
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[200px]">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:auto-rows-[200px]">
           {BENTO_LAYOUT.map((item, i) => {
             const component = COMPONENTS.find((c) => c.slug === item.slug);
             if (!component) return null;

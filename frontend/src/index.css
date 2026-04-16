@@ -33,6 +33,10 @@ html {
   color-scheme: light;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 html.dark {
   background-color: #09090b;
   color-scheme: dark;

@@ -33,7 +33,7 @@ function DiscordIcon({ className }: { className?: string }) {
 export function Footer() {
   return (
     <footer className="border-t border-zinc-100 dark:border-zinc-900">
-      <div className="mx-auto max-w-6xl px-6 py-16">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <div className="flex flex-col items-center gap-8">
           <Link to="/" className="flex cursor-pointer items-center gap-2">
             <img src="/logo.svg" alt="OnChainUI" width={28} height={28} className="h-7 w-7 dark:invert" />

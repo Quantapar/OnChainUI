@@ -9,7 +9,7 @@ const LINES = [
 export function HowItWorks() {
   return (
     <section className="border-t border-zinc-100 dark:border-zinc-900">
-      <div className="mx-auto max-w-3xl px-6 py-24">
+      <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-24">
         <ScrollReveal className="text-center">
           <h2 className="text-4xl font-normal tracking-tight text-zinc-900 md:text-5xl dark:text-zinc-50">
             Three lines <span className="italic text-brand">to production</span>
@@ -29,10 +29,10 @@ export function HowItWorks() {
                 ~/onchain-app
               </span>
             </div>
-            <div className="px-6 py-6 font-mono text-sm leading-relaxed">
+            <div className="overflow-x-auto px-4 py-5 font-mono text-xs leading-relaxed sm:px-6 sm:py-6 sm:text-sm">
               {LINES.map((line, i) => (
                 <ScrollReveal key={line.text} delay={0.25 + i * 0.15} distance={8}>
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 whitespace-nowrap">
                     <span className="select-none text-brand">{line.prompt}</span>
                     <span
                       className={

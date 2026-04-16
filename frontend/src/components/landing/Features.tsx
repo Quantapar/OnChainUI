@@ -30,7 +30,7 @@ const FEATURES = [
 export function Features() {
   return (
     <section id="features" className="relative border-t border-zinc-100 dark:border-zinc-900">
-      <div className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
         <ScrollReveal className="mx-auto w-full text-center">
           <h2 className="mx-auto text-4xl font-normal tracking-tight text-zinc-900 md:text-5xl dark:text-zinc-50">
             Built <span className="italic text-brand">for</span> web3 developers
@@ -43,7 +43,7 @@ export function Features() {
         <div className="mx-auto mt-16 grid max-w-4xl gap-px overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-200/80 sm:grid-cols-2 dark:border-[#1e1e22] dark:bg-[#1e1e22]">
           {FEATURES.map((feature, i) => (
             <ScrollReveal key={feature.number} delay={i * 0.08} distance={20}>
-              <div className="flex h-full flex-col bg-white p-8 dark:bg-[#111113]">
+              <div className="flex h-full flex-col bg-white p-6 sm:p-8 dark:bg-[#111113]">
                 <span className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
                   {feature.number}
                 </span>

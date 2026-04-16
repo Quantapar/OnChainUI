@@ -503,7 +503,7 @@ function ComponentDetail({ component }: { component: ComponentMeta }) {
         <span className="font-medium text-zinc-900 dark:text-zinc-100">{component.name}</span>
       </div>
 
-      <h1 className="mt-4 text-[2rem] font-medium tracking-tight text-zinc-900 dark:text-zinc-50">
+      <h1 className="mt-4 text-2xl font-medium tracking-tight text-zinc-900 sm:text-[2rem] dark:text-zinc-50">
         {component.name}
       </h1>
       <p className="mt-2 text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -538,9 +538,9 @@ function ComponentDetail({ component }: { component: ComponentMeta }) {
 
         <div className="mt-3">
           {tab === "preview" ? (
-            <div className="flex min-h-[280px] items-center justify-center rounded-xl border border-zinc-200 bg-white p-10 dark:border-[#1e1e22] dark:bg-[#111113]">
+            <div className="flex min-h-[280px] items-center justify-center rounded-xl border border-zinc-200 bg-white p-6 sm:p-10 dark:border-[#1e1e22] dark:bg-[#111113]">
               {LIVE_PREVIEWS[component.slug] ?? (
-                <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50/50 px-8 py-6 dark:border-zinc-700 dark:bg-zinc-800/40">
+                <div className="max-w-full overflow-x-auto rounded-xl border border-dashed border-zinc-200 bg-zinc-50/50 px-4 py-4 sm:px-8 sm:py-6 dark:border-zinc-700 dark:bg-zinc-800/40">
                   <code className="font-mono text-sm text-zinc-600 dark:text-zinc-400">{component.usage}</code>
                 </div>
               )}
@@ -568,7 +568,7 @@ function AllComponentsList() {
 
   return (
     <div className="max-w-3xl">
-      <h1 className="text-[2rem] font-medium tracking-tight text-zinc-900 dark:text-zinc-50">
+      <h1 className="text-2xl font-medium tracking-tight text-zinc-900 sm:text-[2rem] dark:text-zinc-50">
         Components
       </h1>
       <p className="mt-2 text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -631,13 +631,13 @@ export function ComponentsPage() {
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       <header className="sticky top-0 z-40 border-b border-zinc-100 bg-white/95 backdrop-blur-md dark:border-zinc-900 dark:bg-zinc-950/95">
         <div className="mx-auto flex h-14 max-w-[1400px] items-center">
-          <div className="flex w-64 shrink-0 items-center border-r border-zinc-100 px-6 dark:border-zinc-900">
+          <div className="flex shrink-0 items-center px-4 sm:px-6 lg:w-64 lg:border-r lg:border-zinc-100 dark:lg:border-zinc-900">
             <Link to="/" className="flex cursor-pointer items-center gap-2">
               <img src="/logo.svg" alt="OnChainUI" width={24} height={24} className="h-6 w-6 dark:invert" />
               <span className="text-[15px] font-semibold text-zinc-900 dark:text-zinc-100">OnChainUI</span>
             </Link>
           </div>
-          <div className="flex flex-1 items-center justify-between px-6">
+          <div className="flex flex-1 items-center justify-between px-4 sm:px-6">
             <div className="hidden items-center gap-5 md:flex">
               <Link to="/components" className="cursor-pointer text-[13px] font-medium text-zinc-900 dark:text-zinc-100">
                 Components
@@ -680,7 +680,7 @@ export function ComponentsPage() {
           />
         )}
 
-        <main className="min-w-0 flex-1 px-6 py-10 lg:px-16">
+        <main className="min-w-0 flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-16">
           {component ? (
             <ComponentDetail component={component} />
           ) : (
